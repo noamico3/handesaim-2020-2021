@@ -1,0 +1,188 @@
+/*************************************שאלה 1****************************************/
+void main() {
+	int arr[30];
+	int i;
+	for ( i = 0; i < 30; i++)
+	{
+		scanf("%d", &arr[i]);
+		if (arr[i] % 2 == 0)
+		{
+			printf("%d", arr[i]);
+		}
+	}
+}
+
+
+/*************************************שאלה 2****************************************/
+void main() {
+	char arr[30];
+	int i;
+	for (i = 0; i < 30; i++) {
+		scanf("%c", &arr[i]);
+		if (arr[i] >='A' && arr[i] <= 'Z')
+			printf("%d", i);
+	}
+}
+
+
+/*************************************שאלה 3****************************************/
+void main() {
+	int arr[30];
+	int i;
+	for ( i = 0; i < 30; i++)
+		arr[i] = i * 3;
+}
+
+
+/*************************************שאלה 4****************************************/
+void main() {
+	const int size = 5;
+	int arr[size];
+	int i;
+	for (i = 0; i < size; i++) {
+		scanf("%d", &arr[i]);
+		if (i % 2 ==0)
+		{
+			arr[i] = arr[i] + 1;
+		}
+	}
+}
+
+/*************************************שאלה 5****************************************/
+void main() {
+	int arr[30];
+	int i;
+	for (i = 0; i < 30; i++) {
+		scanf("%d", &arr[i]);
+		if (i % 2 ==0)
+		{
+			arr[i] = arr[i] + 1;
+		}
+		if (i % 3 == 0)
+		{
+			arr[i] = arr[i] - 1;
+		}
+	}
+}
+
+
+/*************************************שאלה 6****************************************/
+void main() {
+	char c;
+	const int size = 30;
+	char arr[size];
+	int i,counter = 0;
+	printf("enter the char you want to check:\n");
+	scanf("\n%c", &c);
+	printf("enter the array values:\n");
+	for (i = 0; i < size; i++) {
+		scanf("\n%c", &arr[i]);
+		if (arr[i] == c)
+		{
+			counter++;
+		}
+	}
+	printf("the char %c is %d times in the array.",c, counter);
+}
+
+
+/*************************************שאלה 7****************************************/
+void main() {
+	int arr[6] = { 0,0,0,0,0,0 };
+	long arr1[3] = { 0,0,0 };
+	if (sizeof(arr) > sizeof(arr1))
+		printf("arrray with 6 int takes more space in the memory.");
+	if (sizeof(arr) < sizeof(arr1))
+		printf("arrray with 3 long takes more space in the memory.");
+	if (sizeof(arr) == sizeof(arr1))
+		printf("the both arrays takes the same space in the memory");
+}
+
+
+/*************************************שאלה 8****************************************/
+void main() {
+	int arr1[5];
+	int arr2[5];
+	int arr3[5];
+	int i;
+	for ( i = 0; i < 5; i++)
+	{
+		printf("enter number %d in array number 1:\n",i+1);
+		scanf("%d", &arr1[i]);
+	}
+	for (i = 0; i < 5; i++)
+	{
+		printf("enter number %d in array number 2:\n",i+1);
+		scanf("%d", &arr2[i]);
+	}
+	for (i = 0; i < 5; i++)
+		arr3[i] = arr1[i] + arr2[i];
+}
+
+
+/*************************************שאלה 9****************************************/
+void main() {
+	char arr[5];
+	int i,number,check = 1;
+	for ( i = 0; i < 5; i++)
+	{
+		printf("enter char %d:\n", i + 1);
+		scanf("\n%c", &arr[i]);
+		if (i == 0)
+		{
+			number = arr[i];
+		}
+		else
+		{
+			if (arr[i] != number)
+			{
+				check = 0;
+			}
+		}
+	}
+	if (check == 0)
+		printf("not all the chars in the array is the same.");
+	else
+		printf("all the chars are the same");
+}
+
+
+/*************************************שאלה 10****************************************/
+void main() {
+	int arr[5];
+	int i,a = 1;
+	for (i = 0; i < 5; i++)
+	{
+		printf("enter number %d:\n", i + 1);
+		scanf("%d", &arr[i]);
+		if (arr[i-1] > arr[i] && i != 0)
+		{
+			a = 0;
+		}
+	}
+	if (a == 0)
+		printf("the array is not sorted");
+	else
+		printf("the array is sorted");
+}
+
+
+/*************************************שאלה 11****************************************/
+void main() {
+	int arr[] = { /*כאן מכניסים את המשתנים של המערך*/ };
+	const int size = sizeof(arr) / sizeof(int);
+	int head = 0, tail = size - 1,no = 1;
+	while (head <= tail)
+	{
+		if (arr[head] != arr[tail])
+			no = 0;
+		head += 1;
+		tail -= 1;
+	}
+	if (no == 0)
+		printf("not a palindrom");
+	else
+		printf("it is a palindrom");
+}
+
+

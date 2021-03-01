@@ -1,0 +1,6 @@
+1. List* tmp = lst.head;
+2. while(tmp != NULL)
+3.if(tmp -> data == lookFor)
+4.return tmp;
+5.tmp = tmp->next
+6.return NULL

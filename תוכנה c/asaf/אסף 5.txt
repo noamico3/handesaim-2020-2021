@@ -1,0 +1,932 @@
+/*********************************************שאלה 1****************************************************/
+void main(){
+	int i = 1;
+	while(i <=100){
+		if(i !=3 && i != 22 && i != 68 && i != 88)
+			printf("%d",i);
+		i++;
+	}
+}
+
+/***********************************************שאלה 2***************************************************/
+void main() {
+	int i = 1;
+	for (; i <= 100; i++)
+	{
+		if (i % 21 == 0)
+			printf("%d", i);
+	}
+}
+/***********************************************שאלה 3***************************************************/
+void main() {
+	int i = 0;
+	int x = 0;
+	for (; i <= 100; i++)
+	{
+		x = i % 2 == 0;
+		switch (x)
+		{
+		case 1: printf("%d", i);
+		default:
+			break;
+		}
+	}
+}
+/***********************************************שאלה 4***************************************************/
+void main() {
+	srand(time(NULL));
+	int choose;
+	int rnd = rand() % 100 + 1;//הגרנו מספר בין 1 ל-100
+	printf("enter a number:\n");
+	scanf("%d", &choose);
+	int counter = 1; //קלטנו כבר פעם אחת ולכן הוא יתחיל מ1
+	while(choose != rnd && counter <= 10)//כל עוד הבחירה לא שווה למספר שהוגרל וגם שלא ניסה כבר 10 פעמים
+	{
+		if (choose > rnd)//אם המספר שניחשנו גדול מהמספר המוגרל
+		{
+			printf("the number is lower then that number,please try again:\n");
+			scanf("%d", &choose);
+			counter++;
+
+		}
+		else {//אם המספר שבחרנו קטן מהמספר שהוגרל
+			printf("the number is over that number,please try again:\n");
+			scanf("%d", &choose);
+			counter++;
+		}
+	}
+	if (choose == rnd)//אם צדקנו
+		printf("you won!");
+	else//אם ניסינו כבר 10 פעמים ולא הצלחנו גם בפעם העשירית
+		printf("you are out of tries,sorry bad luck :(");
+	
+}
+/***********************************************שאלה 5***************************************************/
+void main() {
+	int sum = 0;
+	int number;
+	printf("enter a number:\n");
+	scanf("%d", &number);
+	while (number != -1) {
+		sum = sum + number;
+		printf("enter a number:\n");
+		scanf("%d", &number);
+	}
+	printf("sum=%d", sum);
+}
+
+
+/***********************************************שאלה 6***************************************************/
+/*התוכנה מחשבת עצרת של מספר הנקלט מהמשתמש*/
+void main() {
+	long double azeret;
+	int i, n;
+	printf("enter a positive number:\n");
+	scanf("%d", &n);//קבלת מספר לחישוב העצרת שלו
+	azeret = 1.0;
+	i = 1;
+	while (i<=n)//חישוב עצרת של המספר שהקלדנו
+	{
+		azeret = azeret * i;
+		i++;
+	}
+	printf("%lf", azeret);
+}
+/*----------------------------------------------*/
+n = המספר שנקלט מהמשתמש(המספר המקסימלי שהמחשב יכול להגיע אצלי הוא 170 )
+azeret = העצרת של המספר המקסימלי שנקלט(אצלי המספר המקסימלי הוא 170 ולכן העצרת היא:  7257415615307994045399635715589591467896184117242257803405544211755693246215271577444614997868077640013184176271985826801597743247247979077995336619429980685793285768053360886112149825437081356365699043287884614002788490694530469661753007801896962563721104619242357348735986883814984039817295623520648167424.000000)
+
+
+/***********************************************שאלה 7***************************************************/
+בהמשך לתרגיל הקודם... נוכל לחסוך חזרה אחת בכך שנתחיל את הלולאה מ2 ולא מ1 כלומר:
+i = 1; --> i =2;
+שינוי זה יחסוך חזרה אחת כיוון שעצרת של אחד היא במילא אחד ולכן לא צריך סתם לעבור על העצרת שלו
+
+
+/***********************************************שאלה 8***************************************************/
+---------------------------------------------------א---------------------------------------------
+void  main() {
+	int max, x;
+	int firstTime = 0;//עבור קליטת משתמש בפעם הראשונה
+	int char1,positiveOrNegative = 0,sum = 0,counter = 0;
+	while ( ((char1 = getchar()) >= '0' && char1 <= '9' ) || char1 == '-' || char1 == '\n')
+	{
+		if (char1 == '-')//אם נקלט מינוס
+		{
+			positiveOrNegative = 1;
+		}
+		if (char1 >= '0' && char1 <= '9')//אם נקלט מספר
+		{
+			if (counter == 1)
+			{
+				sum = sum * 10;
+				counter = 0;
+			}
+			sum = sum + (char1 - '0');//החסרנו את האיבר הכי קטן עבורנו(משם מתחילים את הספירה) לכן החסרנו אותו
+			counter++;
+		}
+		
+		if (char1 == '\n')
+		{
+			if (firstTime == 0)//אם זו הפעם הראשונה שקולטים
+			{
+				if (positiveOrNegative == 1)//אם נקלט מינוס
+				{
+					sum = sum * -1;
+					positiveOrNegative = 0;
+					
+				}
+				counter = 0;
+				firstTime = 1;//נשנה שהוא ידע שזה כבר לא פעם ראשונה מעכשיו
+				x = sum;
+				max = x;
+			}
+			else {//אם קלטנו עוד אחרי הפעם הראשונה
+				if (positiveOrNegative == 1)
+				{
+					sum = sum * -1;
+					positiveOrNegative = 0;
+					
+				}
+				counter = 0;
+				x = sum;
+				if (x > max)//אם המספר שנקלט עכשיו יותר גדול ממקס
+				{
+					max = sum;
+				}
+			}
+			printf("max = %d\n", max);
+			sum = 0;//נאפס את הסכום כדי שיתחיל לספור מחדש פעם הבאה
+		}
+		
+	}
+	printf("there is no numbers in the input");
+}
+
+--------------------------------------------ב----------------------------------------------
+הכי טוב להשתמש בלולאת דו וויל כיוון שיש פה משהו שצריך להתרחש לפחות פעם אחת... (הקליטה של המספר)
+אני לא השתמשתי בדו וויל כיוון שהיה לי פשוט יותר נוח עם קליטת תווים...
+
+
+
+/***********************************************שאלה 9***************************************************/
+/*-----------------------------for-------------------------------*/
+void main() {
+	int i = 1;
+	int j = 1;
+	for (; i <= 20; i++)
+	{
+		for (; j <= 20; j++)
+		{
+			printf("%d ", i * j);
+		}
+		printf("\n");
+		j = 1;
+	}
+}
+/*---------------------------while------------------------------*/
+void main() {
+	int i = 1;
+	int j = 1;
+	while (i <= 20)
+	{
+		while (j <= 20)
+		{
+			printf("%d  ", i * j);
+			j++;
+		}
+		j = 1;
+		i++;
+		printf("\n");
+	}
+}
+/***********************************************שאלה 10***************************************************/
+void main() {
+	int char1;
+	while ((char1 = getchar()) != EOF)
+	{
+		switch (char1)
+		{
+		case '\t':
+			printf("    ");
+			break;
+		case '\n':
+			printf("\n\n");
+			break;
+		case '_':
+			printf("-");
+			break;
+		case '9':
+		case '8':
+		case '7':
+		case '6':
+		case '5':
+		case '4':
+		case '3':
+		case '2':
+		case '1':
+			printf("%c*", char1);
+			break;
+		default:
+			printf("%c", char1);
+			break;
+		}
+	}
+}
+/***********************************************שאלה 11***************************************************/
+void main() {
+	int grade = -1;
+	int avargeOfHomework = -1;
+	int exercises = -1;
+	while (grade < 0 || grade > 100)//כופה על המשתמש שיכניס קלט תקין
+	{
+		printf("enter the grade of the student(between 0 - 100):");
+		scanf("%d", &grade);
+	}
+	while (avargeOfHomework < 0 || avargeOfHomework > 100)//כופה על המשתמש שיכניס קלט תקין
+	{
+		printf("enter the avarge of the homework(between 0 - 100):");
+		scanf("%d", &avargeOfHomework);
+	}
+	while (exercises < 0 || exercises > 8)//כופה על המשתמש שיכניס קלט תקין
+	{
+		printf("enter the number of exercises that the student submitted(between 0 - 8):");
+		scanf("%d", &exercises);
+	}
+	if (exercises <= 4)
+	{
+		printf("the final grade is 0.");
+	}
+	if (exercises == 5 || exercises == 6)
+	{
+		if (grade >= 55)
+		{
+			printf("the final grade is:%f", 0.25 * avargeOfHomework + 0.75 * grade);
+		}
+		else {
+			printf("th final grade is:%d", grade);
+		}
+	}
+	if (exercises == 7 || exercises == 8)
+	{
+		if (grade < 55)
+		{
+			if (avargeOfHomework >= 10)
+			{
+				if (avargeOfHomework > grade)//אם ממוצע התרגילים מעלה את הממוצע
+					printf("the final grade is:%f", 0.25 * avargeOfHomework + 0.75 * grade);
+				else//אם ממוצע התרגילים לא מעלה את הממוצע
+					printf("the final grade is;%d", grade);
+			}
+			else
+			{
+				if (avargeOfHomework > grade)//אם ממוצע התרגילים מעלה את הממוצע
+					printf("the final grade is: %f", 0.2 * avargeOfHomework + 0.8 * grade);
+				else//אם ממוצע התרגילים לא מעלה את הממוצע
+					printf("the final grade is;%d", grade);
+			}
+		}
+		else {
+			if (avargeOfHomework > grade)//אם ממוצע התרגילים מעלה את הממוצע
+				printf("the final grade is: %f", 0.3 * avargeOfHomework + 0.7 * grade);
+			else//אם ממוצע התרגילים לא מעלה את הממוצע
+				printf("the final grade is;%d", grade);
+		}
+	}
+	
+	
+}
+
+/***********************************************שאלה 12***************************************************/
+
+--------------------------------------------------אם אפשר לעשות רווחים בין מספר למספר אז תיקח את התכנית הזו  ---------------------------------------------
+void main()
+{
+	printf("do space between the numbers:");
+	int number, lastnumber, firstnumber, firstTime = 1, up = 0, down = 0,isBigger = 0;
+	scanf("%d", &number);
+	firstnumber = number;
+	do
+	{
+		if (firstnumber != number) 
+			firstTime = 0;
+		lastnumber = number;
+		printf("%d ", number);
+		scanf("%d", &number);
+
+		if (isBigger == 1 && lastnumber > number)
+		{
+			if (firstTime == 0)
+				printf("\n%d ", lastnumber);
+			down++;
+		}
+		if (isBigger == 0 && number > lastnumber)
+		{
+			if (!firstTime)
+				printf("\n%d ", lastnumber);
+			up++;
+		}
+		if (lastnumber < number) 
+			isBigger = 1;
+		else 
+			isBigger = 0;
+
+	} while (number != firstnumber);
+	printf("%d\nsummary:\n==================\nThere are %d ascending lines\nThere are %d descending lines.", number, up, down);
+}
+
+
+-------------------------------------------------------------------אם אי אפשר לעשות רווחים בין לבין אז תיקח את התכנית הזו, הצלחתי לעשות רק עם מספרים חיוביים------------------------------------------------------------------
+void main() {
+	int up = 0;
+	int down = 0;
+	int flag = 0;
+	char number;
+	char lastNumber;
+	int counter = 0;
+	int minus = 0;
+	while ((number = getchar()) != '\n')
+	{
+		if (number == '-')
+		{
+			minus = 1;
+		}
+
+
+		if (counter == 0)
+		{
+
+			printf("%c", number );
+			lastNumber = getchar();
+			printf("%c", lastNumber );
+			if (number  < lastNumber )
+			{
+				flag = 1;//במגמת עלייה
+				up++;
+			}
+			else {
+				flag = -1;//מגמת ירידה
+				down++;
+			}
+
+		}
+		if (flag == 1 && number > lastNumber && counter != 0 && minus == 0)
+		{
+			printf("%c", number);
+		}
+		if (flag == -1 && number < lastNumber && counter != 0 && minus == 0)
+		{
+			printf("%c", number);
+		}
+		if (flag == 1 && number < lastNumber && counter != 0 && minus == 0)
+		{
+			up++;
+			flag = -1;
+			printf("\n%c%c", lastNumber, number);
+		}
+
+		if (flag == -1 && number > lastNumber && counter != 0 && minus == 0)
+		{
+			down++;
+			flag = 1;
+			printf("\n%c%c", lastNumber, number);
+		}
+		if (counter != 0)
+		{
+			lastNumber = number;
+		}
+		if (counter == 0)
+		{
+			counter++;
+		}
+	}
+	if (up % 2 == 1)
+	{
+		up--;
+		down++;
+	}
+	printf("\nsummary:\n==================\nthere are %d ascending lines\nthare are %d descending lines\n", up, down);
+}
+
+
+
+
+
+
+
+/***********************************************שאלה 13***************************************************/
+/*-----------------------------------------סעיף א ----------------------------------------------*/
+void main() {
+	unsigned long len;
+	unsigned long wid;
+	int i = 1;
+	int j = 1;
+	printf("enter width:\n");
+	scanf("%lu", &wid);
+	while (wid < 0)
+	{
+		printf("enter width:\n");
+		scanf("%lu", &wid);
+	}
+	printf("enter length:\n");
+	scanf("%lu", &len);
+	while (len < 0)
+	{
+		printf("enter length:\n");
+		scanf("%lu", &len);
+	}
+	for (; i <= wid; i++)
+	{
+		for ( ; j <= len; j++)
+		{
+			printf("*");
+		}
+		j = 1;
+		printf("\n");
+	}
+}
+/*---------------------------------------סעיף ב --------------------------------------------------*/
+
+void main() {
+	unsigned long len;
+	unsigned long wid;
+	int i = 1;
+	int j = 1;
+	printf("enter width:\n");
+	scanf("%u", &wid);
+	while (wid < 0)
+	{
+		printf("enter width:\n");
+		scanf("%lu", &wid);
+	}
+	printf("enter length:\n");
+	scanf("%u", &len);
+	while (len < 0)
+	{
+		printf("enter length:\n");
+		scanf("%lu", &len);
+	}
+	for (; i <= wid; i++)
+	{
+		if (i == 1 || i == wid)
+		{
+			for (; j <= len; j++)
+			{
+				printf("*");
+			}
+		}
+		else
+		{
+			for (; j <= len; j++)
+			{
+				if (j == 1 || j == len)
+					printf("*");
+				else
+					printf(" ");
+
+			}
+		}
+		
+		j = 1;
+		printf("\n");
+	}
+}
+
+/***********************************************שאלה 14***************************************************/
+void main() {
+	int number;
+	int i = 0;
+	printf("enter a number:\n");//הקלט חייב להיות מספר שלם על מנת שנוכל להפעיל עליו את ביצוע המודולו
+	scanf("%d", &number);
+	printf("%d", number);
+	while (number != 0)
+	{
+		printf("%d", number % 10);
+		number = number / 10;
+	}
+}
+
+
+/***********************************************שאלה 15***************************************************/
+בהתחלה נקבל 2 מספרים שאנו מסתמכים על המשתמש שהם אכן חיוביים, לאחר הקלט נשאל מי יותר גדול ממי? ובהתאם נחליט מי המספר המקסימלי ומי המספר השני במקומו.
+חלק ב - נקלוט עוד מספר ונבדוק האם הוא גדול מהמקסימום או האם הוא גדול מהמספר השני הכי גדול כעת וקטן מהמקסימום ונבצע פעולות בהתאם(כיוון ש2 המספרים הראשונים חיוביים, אם יקלט מספר שלילי הוא לא יענה על אף אחד מהקריטריונים ויגיע אל התנאי, שם הוא לא יהיה נכון ויצא מהלולאה)
+חלק ג - נחזור על התהליך שוב ושוב עד לקבלת קלט שלילי
+-----------------------------------------------------------------------------------------------
+
+הייתי בודק את המקרים הבאים: 
+1 - מספר חיובי
+2- מספר שלילי
+3 - מספר שווה לערך המקסימלי
+4 - מספר שווה לערך השני הכי גדול
+5 - 0
+
+-----------------------------------------------------------------------------------------------
+ void main() {
+	int number;
+	int number2;
+	int i = 0,max,second;
+	printf("enter a number:\n");
+	scanf("%d", &number);
+	printf("enter a number:\n");
+	scanf("%d", &number2);
+	if (number > number2) {//כאן אנחנו מטפלים רק ב2 המספרים הראשונים כאשר אנחנו יודעים שבטוח יהיו חיוביים
+		second = number2;
+		max = number;
+	}
+	else {
+		max = number2;
+		second = number;
+	}
+
+	do//רוצים לשאול עוד מספר לפחות עוד פעם אחת ולכן השתמשתי בלולאת דו וויל
+	{
+		printf("enter a number:\n");
+		scanf("%d", &number);
+		if (number < max && number > second)//בודק אם המספר החדש קטן מהמקסימום ובנוסף בודק ההאם הוא גדול מהמספר השני הכי גדול כעת 
+		{
+			second = number;//נשים את המספר בתור המספר השני הכי גדול
+		}
+		if (number > max)//בודק האם המספר גדול מהמקסימום
+		{
+			second = max;//נשים את המקסימום הנוכחי במקום השני ובמקסימום את המספר היותר גדול שהרגע הוכנס
+			max = number;
+		}
+	} while (number >= 0);//(תמשיך לבצע כל עוד המספר לא שלילי(המספרים החיוביים הם תת-קבוצה של קבוצת המספרים האי-שליליים, הכוללת את כל המספרים החיוביים ו-0.
+	printf("%d", second);
+}
+/***********************************************שאלה 16***************************************************/
+void main() {
+	srand(time(NULL));
+	unsigned long base;
+	int i = 0;
+	int j = 1;
+	int z = 1;
+	int rnd = rand() % 80;//מ-0 עד 79
+	if (rnd % 2 == 0)//אם מספר זוגי או 0
+	{
+		rnd += 1;//נוסיף אחד כי צריך מספר אי זוגי
+	}
+	base = rnd;//נשים את התוצאה במשתנה בשם בסיס על מנת שנבין את הקוד טוב יותר
+	int counter = base;
+	for (; i < base; i++)//רץ על מספר השורות
+	{
+		for (;  counter < base && counter != 0 ; counter++)//מדפיס את ההרווחים
+		{
+			printf(" ");
+		}
+		
+		for (; j <= base - i; j++)//מדפיס את הכוכביות
+		{
+			printf("* ");
+		}
+		counter -= z;// היינו צריכים על מנת להדפיס רווחים בסדר יורד להפחית כל פעם במשתנה שממשיך להעלות את עצמו
+		z++;//זה התו שאנחנו מעלים כל פעם על מנת שהמונה שלנו ירד כל פעם בעוד אחד
+		j = 1;//מחזירים את המתשתנה לתחילתו על מנת שנוכל להריץ שוב את לולאת הפור של הכוכביות כי הרי הוא התקדם לפני זה
+		printf("\n");
+	}
+	/*--------------------------כאן מתחילים את הפרמידה שבסיסה למטה-------------------------------*/
+	i = 1;
+	j = 1;
+	z = 1;
+	for (; i <= base; i++)//עובר על השורות
+	{
+		for ( ; z <= base - i; z++)//מדפיס את הרווחים
+		{
+			printf(" ");
+		}
+		for ( ; j <= i; j++)// מדפיס את הכוכביות
+		{
+			printf("* ");
+		}
+		j = 1;//נחזיר ל-1 חזרה על מנת שנוכל לעשות שוב בפעם הבאה את לולאת הפור של הכוכביות
+		z = 1;// נחזיר ל-1 חזרה על מנת שנוכל לעשות שוב בפעם הבאה את לולאת הפור של הרווחים
+		printf("\n");
+	}
+}
+
+/*-----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+ישנם 3 מקרי קצה: 1) מספרים זוגיים בין 1 ל-80    2) מספרים אי זוגיים בין 1 ל- 80   3) 0    4) 79
+המספרים הזוגיים בעייתיים לנו כי אנחנו צריכים לקבל רק מספרים אי זוגיים ולכן נבדוק מה עושים איתם
+המספרים האי זוגיים צריך לבדוק גם אותם לראות שהכל עובד קשורה
+המספר 0 כיוון שהוא קצה גבול וגם אינו אי זוגי וגם אינו זוגי
+המספר 79 כיוון שהוא קצה התחום שלנו
+
+
+
+/***********************************************שאלה 17***************************************************/
+/*------------------------------קטע קוד משותף ל2 הסעיפים ------------------------------------*/
+void main() {
+	int N;
+	int x, y;
+	int i = 1;
+	printf("enter N value:\n");
+	scanf("%d", &N);
+
+/*-------------------------------סעיף א ---------------------------------*/
+
+	for (; i <= 2; i++)
+	{
+		if (N % 2 == 0)//אם המספר הוא זוגי
+		{
+			if (i == 1)//בפעם הראשונה נציב לו סתם איקס ולפיו הוא יעלה ויוריד את הווי עד שנגיע לתוצאה נכונה
+				x = 2;//שמנו בכוונה מספר זוגי כי איקס הוא 3 ואם הוא לא יהיה זוגי לעולם לא נקבל תשובה נכונה
+			else 
+				x = -2;//בפעם השנייה נתחיל ממינוס 2
+			y = 0;//נאתחל את ווי
+			while ( (y  + 3 * x )!= N)//כל עוד הוא לא יקבל תוצאה נכונה הוא ישחק מעלה ולמטה עם הווי תלוי אם הקלט חיובי או שלילי
+			{
+				if (N < 0)
+					y += 2;
+				else
+					y--;
+			}
+			
+			y = y / 2;//חילקנו ב2 כי במשוואה יש 2 ווי
+		}
+		else
+		{
+			if (i == 1)//בפעם הראשונה
+				x = 1;//שמנו באיקס 1 כיוון שכך תמיד המספר יהיה אי זוגי לא משנה מה נשים בווי
+			else
+				x = -1;//בפעם השנייה התחלנו ממינוס 1
+			
+			y = 0;
+			while ((y + 3 * x) != N)//כל עוד לא תצא תוצאה נכונה הוא יעלה ויריד את ווי בהתאם
+			{
+				if (N > 0)
+					y += 2;
+				else
+					y--;
+			}
+			y = y / 2;//נחלק את ווי ב2 כי במשווה יש 2 ווי
+		}
+		printf("x = %d y = %d\n", x, y);
+	}
+}
+
+
+
+
+
+/*-------------------------------סעיף ב ---------------------------------*/
+	int results;
+	printf("enter results number:\n");
+	scanf("%d", &results);
+	for (; i <= results; i++)
+	{
+		if (N % 2 == 0)//אם המספר הוא זוגי
+		{
+			if (i == 1)//בפעם הראשונה נציב לו סתם איקס ו
+				x = -10;//שמנו בכוונה מספר זוגי כי איקס הוא 3 ואם הוא לא יהיה זוגי לעולם לא נקבל תשובה נכונה
+			else
+				x = x + 2;//בפעם השנייה והלאה נעלה את איקס ב2 כדי שימשיך להיות זוגי
+			y = 0;//נאתחל את ווי
+			while ((y + 3 * x) != N)//כל עוד הוא לא יקבל תוצאה נכונה הוא ישחק מעלה ולמטה עם הווי תלוי אם הקלט חיובי או שלילי
+			{
+				if (N < 0)
+					y += 2;
+				else
+					y--;
+			}
+
+			y = y / 2;//חילקנו ב2 כי במשוואה יש 2 ווי
+		}
+		else
+		{
+			if (i == 1)//בפעם הראשונה
+				x = 1;//שמנו באיקס 1 כיוון שכך תמיד המספר יהיה אי זוגי לא משנה מה נשים בווי
+			else
+				x = x + 2;//בפעם השנייה והלאה העלנו את איקס ב2 כך שעדיין יהיה אי זוגי
+
+			y = 0;
+			while ((y + 3 * x) != N)//כל עוד לא תצא תוצאה נכונה הוא יעלה ויריד את ווי בהתאם
+			{
+				if (N > 0)
+					y += 2;
+				else
+					y--;
+			}
+			y = y / 2;//נחלק את ווי ב2 כי במשווה יש 2 ווי
+		}
+		printf("x = %d y = %d\n", x, y);
+	}
+}
+
+
+
+/***********************************************שאלה 18***************************************************/
+
+/*-------------------------------סעיף א ---------------------------------*/
+void main(){
+	int sum = 1;
+	int i = 1;
+	int number = 5;
+	do
+	{
+		sum = sum * i;
+		i++;
+	}while(i<=number);
+}
+עם התוכנית הזו אנחנו נסיים עם 
+sum = 120
+i = 6;
+--------------------------------------------------------------
+void main(){
+	int sum = 1;
+	int i = 1;
+	int number = 5;
+	for(; i <= number; i++){
+		sum = sum * i;
+	}
+}
+בתוכנית הזו אחנו נסיים עם:
+sum = 120
+i = 6;
+----------------------------------------------------------------
+בשני המקרים אחנו רואים שקיבלנו את אותה תוצאה... תמיד נוכל להמיר בין הלולאות. בשביל ליצור לולאת דו וויל פשוט נוסיף את כל מה שיש בתוך לולאת הפור פעם אחת לפני הלולאה... אז מדוע לא הסתפקו בלולאת פור?על מנת לחסוך בשורות קוד...
+  כיוון שלולאת פור תשאל מההתחלה את התנאי ואם התנאי לא מתקיים הוא לא יכנס בכלל ללולאה ונצטרך באמת להעתיק את כל הקוד פעם נוספת לפני הלולאה בשביל לעשות דו וויל בעצמאות פור.
+ לעומת זאת לולאת דו וויל תכנס בכל אופן פעם אחת לפחות ותבצע את הפעולות וכלל לא תתיחס לתנאי בפעם הראשונה.
+זה טוב אם אתה רוצה לעשות פעולה מסויימת לפחות פעם אחת או לשאול את התנאי על משהו שהתבצע בפעם בראשונה בלולאה.
+
+
+
+/*--------------------------------------------------------סעיף ב --------------------------------------------------------------*/
+1) תהיה הודעת שגיאה כיוון שחייב בתוך הסוגריים תנאי או ערך כלשהוא
+2)לולאה אין סופית כיוון שערך גדול מ-0 מחזיר אמת
+3)אם איקס קטן מ2 הוא לא יכנס ללולאה ולכן לא יקרה כלום, אם איקס שווה ל-2 אז עדיין הוא לא יכנס ללולאה ועדיין לא יקרה כלום אך אם איקס יהיה גדול מ-2 הלולאה תקדם את איקס עד אין סוף
+4)לולאה אין סופית כיוון שאיקס פשוט יקבל תחילה 2 וערך גדול מ-0 מחזיר אמת 
+5)אם איקס קטן מ2 הוא לא יכנס ללולאה ולכן לא יקרה כלום, אם איקס שווה ל-2 אז עדיין הוא לא יכנס ללולאה ועדיין לא יקרה כלום אך אם איקס יהיה גדול מ-2 הלולאה תרוץ עד אין סוף
+6) הלולאה תשים באיי את הערך 0 ואז כיוון ש-0 שווה לשקר הלולאה לא תתבצע
+7)לולאה אין סופית כיוון שאין לו שום תנאי שיעצור אותו אז הוא ירוץ עד אין סוף
+8)אם איי גדול או שווה ל 10 אז הלולאה לא תתבצע אבל אם איי קטן מ10 הלולאה תתבצע אין סוף פעמים
+9)בהתחלה איי יקבל את הערך אפס, לאחר מכן הולאה תשאל אם 0 קטן מ10 ותחזיר אמת, כיוון שאין שום פעולה שתשנה את הערך של ווי, הלולאה תמיד תקבל אמת ולכן תרוץ עד אין סוף.
+10)בהתחלה איי יקבל את הערך 0, לאחר מכן הלולאה תשאל האם 0 קטן מאחד ותחזיר אמת, הלולאה בסיומה(למרות שאינה עושה כלום בפועל) תקדם את איי באחד ולכן תתבצע 10 פעמים עד שאיי כבר לא יהיה קטן מ10
+11)בהתחלה איי יקבל את הערך 0, לאחר מכן הלולאה תשאל האם 0 קטן מאחד ותחזיר אמת, הלולאה בסיומה(למרות שאינה עושה כלום בפועל)תוריד 1 מג'יי ותקדם את איי באחד ולכן תתבצע 10 פעמים עד שאיי כבר לא יהיה קטן מ10 (זה שג'יי כל פעם יורד באחד לא משפיע לנו על התקדמות הלולאה).
+12)בהתחלה איי וג'יי יקבלו את הערך 0, לאחר מכן הלולאה תשאל האם 0 קטן מאחד ותחזיר אמת, הלולאה בסיומה(למרות שאינה עושה כלום בפועל) תקדם את איי באחד ולכן תתבצע 10 פעמים עד שאיי כבר לא יהיה קטן מ10 
+13) איי יקבל בהתחלה את הערך 0, לאחר מכן הלולואה תשאל האם 0 קטן מ10 ותקדם את איי. האמנם,כיוון ששמנו נקודה פסיק  לפני הסוגריים המסולסלים מה שבתוכן לא יתבצע ...כלומר הלולאה פשוט תקדם את איי ל10 אך לא תעשה את מה שבתוך הסוגריים. 
+
+
+
+/***********************************************שאלה 19***************************************************/
+void main() {
+	const int player1 = 1, player2 = 2;
+	int coinsInpile1, coinsInpile2, coinsInpile3,chosenPile,numOfCoinsChosen = 0, turn = 1;
+	printf("how much coins in pile 1?:\n");
+	scanf("%d", &coinsInpile1);
+	while (coinsInpile1 <= 0)//כופה עליו להכניס מספר חיובי של מטבעות על מנת שיהיו מטבעות בערימה
+	{
+		printf("how much coins in pile 1?:\n");
+		scanf("%d", &coinsInpile1);
+	}
+	printf("how much coins in pile 2?:\n");
+	scanf("%d", &coinsInpile2);
+	while (coinsInpile2 <= 0)//כופה עליו להכניס מספר חיובי של מטבעות על מנת שיהיו מטבעות בערימה
+	{
+		printf("how much coins in pile 2?:\n");
+		scanf("%d", &coinsInpile2);
+	}
+	printf("how much coins in pile 3?:\n");
+	scanf("%d", &coinsInpile3);
+	while (coinsInpile3 <= 0)//כופה עליו להכניס מספר חיובי של מטבעות על מנת שיהיו מטבעות בערימה
+	{
+		printf("how much coins in pile 3?:\n");
+		scanf("%d", &coinsInpile3);
+	}
+	while (coinsInpile1 + coinsInpile2 + coinsInpile3 != 0)//כל עוד לא נגמרו המטבעות בכל
+	{
+		if (turn == player1)//אם התור של שחקן 1
+		{
+			printf("player1: from wich pile do you want to take?:\n");
+			scanf("%d", &chosenPile);
+		}
+		if (turn == player2)//אם התור של שחקן 2
+		{
+			printf("player2: from wich pile do you want to take?:\n");
+			scanf("%d", &chosenPile);
+		}
+		
+		while (chosenPile < 1 || chosenPile > 3)//אם הוא בחר בחבילה לא קיימת 
+		{
+			if (turn == player1)//אם התור הוא של שחקן1
+			{
+				printf("the pile doesn't exist,try again!\nplayer1: from wich pile do you want to take?:\n");
+				scanf("%d", &chosenPile);
+			}
+			if (turn == player2)//אם התור של שחקן2
+			{
+				printf("the pile doesn't exist,try again!\nplayer2: from wich pile do you want to take?:\n");
+				scanf("%d", &chosenPile);
+			}
+		}
+		while (chosenPile == 3 && coinsInpile3 == 0 || chosenPile == 2 && coinsInpile2 == 0 || chosenPile == 1 && coinsInpile1 == 0)//אם הוא בחר בחבילה שהיא ריקה 
+		{
+			printf("you can't take coins from this pile because it's empty!\nchoose another pile:\n");
+			scanf("%d", &chosenPile);
+		}
+		if (chosenPile == 3)
+		{
+			printf("How many coins do you want to take from this pile?:\n");
+			scanf("%d", &numOfCoinsChosen);
+			while (numOfCoinsChosen < 1 || numOfCoinsChosen > coinsInpile3)//צריך לבדוק שהוא אכן בחר לקחת לפחות מטבע אחד או שלא רצה לקחת יותר מטבעות ממה שקיים בערימה
+			{
+				if (numOfCoinsChosen < 1)
+				{
+					printf("you have to take at least 1 coin!\nhow many coins do you want to take from this pile?:\n");
+					scanf("%d", &numOfCoinsChosen);
+				}
+				if (numOfCoinsChosen > coinsInpile3)
+				{
+					printf("there is no enough coins in the pile!\nhow many coins do you want to take from this pile?:\n");
+					scanf("%d", &numOfCoinsChosen);
+				}
+			}
+			coinsInpile3 -= numOfCoinsChosen;//נחסר מהערימה את כמות המטבעות שהשחקן רצה להוציא
+			if (turn == player1)//אם היה תור שחקן אחד אז עכשיו יהיה תורו של שחקן 2
+				turn = player2;
+			else
+				turn = player1;
+		}
+		if (chosenPile == 2)
+		{
+			printf("How many coins do you want to take from this pile?:\n");
+			scanf("%d", &numOfCoinsChosen);
+			while (numOfCoinsChosen < 1 || numOfCoinsChosen > coinsInpile2)//צריך לבדוק שהוא אכן בחר לקחת לפחות מטבע אחד או שלא רצה לקחת יותר מטבעות ממה שקיים בערימה
+			{
+				if (numOfCoinsChosen < 1)
+				{
+					printf("you have to take at least 1 coin!\nhow many coins do you want to take from this pile?:\n");
+					scanf("%d", &numOfCoinsChosen);
+				}
+				if (numOfCoinsChosen > coinsInpile2)
+				{
+					printf("there is no enough coins in the pile!\nhow many coins do you want to take from this pile?:\n");
+					scanf("%d", &numOfCoinsChosen);
+				}
+			}
+			coinsInpile2 -= numOfCoinsChosen;//נחסר מהערימה את כמות המטבעות שהשחקן רצה להוציא
+			if (turn == player1)//אם היה תור שחקן אחד אז עכשיו יהיה תורו של שחקן 2
+				turn = player2;
+			else
+				turn = player1;
+		}
+		if (chosenPile == 1)
+		{
+			printf("How many coins do you want to take from this pile?:\n");
+			scanf("%d", &numOfCoinsChosen);
+			while (numOfCoinsChosen < 1 || numOfCoinsChosen > coinsInpile1)//צריך לבדוק שהוא אכן בחר לקחת לפחות מטבע אחד או שלא רצה לקחת יותר מטבעות ממה שקיים בערימה
+			{
+				if (numOfCoinsChosen < 1)
+				{
+					printf("you have to take at least 1 coin!\nhow many coins do you want to take from this pile?:\n");
+					scanf("%d", &numOfCoinsChosen);
+				}
+				if (numOfCoinsChosen > coinsInpile2)
+				{
+					printf("there is no enough coins in the pile!\nhow many coins do you want to take from this pile?:\n");
+					scanf("%d", &numOfCoinsChosen);
+				}
+			}
+			coinsInpile1 -= numOfCoinsChosen;//נחסר מהערימה את כמות המטבעות שהשחקן רצה להוציא
+			if (turn == player1)//אם היה תור שחקן אחד אז עכשיו יהיה תורו של שחקן 2
+				turn = player2;
+			else
+				turn = player1;
+		}
+		
+	}
+	if (turn == 2 )//בסוף כל קלט אנחנו משנים את התור לשחקן השני ולכן מי שינצח זה מי שכביכול היה תורו אבל כבר השחקן השני ניצח
+	{//לכן אם היה התור של שחקן 2 לשחק עכשיו כביכול,אז שחקן 1 הוא זה שהוציא את המטבע האחרון ולכן הוא המנצח
+		printf("the winner is player1!!!");
+	}
+	else
+		printf("the winner is player2!!!");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

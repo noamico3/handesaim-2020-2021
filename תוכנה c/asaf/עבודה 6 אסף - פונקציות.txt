@@ -1,0 +1,195 @@
+/*********************************תרגיל 1 ***********************************/
+int arithmeticProgression(int number){
+	int sum = (number * (1 + number)) / 2;   //סכום של סדרה חשבונית
+	return sum;
+}
+void main(){
+	int i = 1;
+	int number;
+	for(; i <= 3;i++){
+		printf("Enter a number:\n");
+		scanf("%d",&number);
+		while(number < 0){
+			printf("Enter a number:\n");
+			scanf("%d",&number);
+		}
+		printf("the arithmetic progression of %d is %d.\n",number,arithmeticProgression(number));
+	}
+}
+/*********************************תרגיל 2 ***********************************/
+int sum(int number){
+	int sum = (number * (1 + number)) / 2;  //נוסחת סכום סדרה חשבונית
+	return sum;
+}
+void main(){
+	int i = 1;
+	int number;
+	for(; i <= 3;i++){
+		printf("Enter a number:\n");
+		scanf("%d",&number);
+		while(number < 0){
+			printf("Enter a number:\n");
+			scanf("%d",&number);
+		}
+		printf("the arithmetic progression of %d is %d.\n",number,sum(number));
+	}
+}
+/*********************************תרגיל 3 ***********************************/
+int max(int number, int number2) {
+	if (number > number2)
+		return number;
+	return number2;
+}
+
+int min(int number, int number2) {
+	if (number < number2)
+		return number;
+	return number2;
+}
+
+
+void main() {
+	int i = 1;
+	int number;
+	int max1,min1;
+	for (; i <= 7; i++) {
+		printf("Enter a number:\n");
+		scanf("%d", &number);
+		if (i == 1)
+			max1 = min1 = number;
+		max1 = max(max1, number);
+		min1 = min(min1, number);
+	}
+	printf("the min is: %d\nthe max is: %d.", min1, max1);
+}
+
+
+
+/*********************************תרגיל 4 ***********************************/
+ראה קובץ מצורף***
+
+
+
+/*********************************תרגיל 5 ***********************************/
+void CallMe() {
+	static int times = 0;
+	printf("main() called me %d times so far.\n", ++times);
+	return;
+}
+
+/*********************************תרגיל 6 ***********************************/
+לא תהיה שגיאת הידור ולא שגיאה בזמן ריצה. התכנית אינה שגויה בעיקרון אך ישנם כמה דברים שלא כשורה:
+1) הפונקציה מוגדרת כ - פונקציה המחזירה שלם אך בסוף הפונקציה אין החזרה של ערך מטיפוס שלם ואין החזרה בכלל..
+2)הוא הגדיר שני משתנים באותו שם. כיוון שהמשתנה פו השני הוא בתוך בלוק הוא מוכר רק שם והוא כביכול חסר ערך בתכנית וזה לא תהיה שגיאה אך עדיין עדיף להמנע מכך
+הפלט יהיה "המשתנה פו = 88" כיוון שישנה לולאת פור שתקדם כל הזמן את פו עד 87 והיא תכנס ללולאה שוב כשפו יהיה 87 והפעם יהיה עוד קידום של פו אך הקידום יתבצע בתוך הלולאה עצמה ולא בגלל הקידום שבתוך הסוגריים של הלולאה ולכן בסוף המשתנה פו יהיה 88 ולא 87. לאחר מכן ישנו בלוק שבתוכו יש משתנה לוקאלי שגם שמו פו אך לא אכפת לנו ממנו בתכנית הזו . עקב כך הפו המיוחס בהדפסה זה הפו שמוגדר בהתחלה ולא האחד בתוך הבלוק
+!!!.
+### יכול להיות שהמשתמש התכוון לקדם את פו רק עד 87 ולא עד 88 כי הוא רשם בלולאת הפור קטן מ88 ולא גם שווה... יכול להיות שהוא התכוון לקדם את את פו באחד כל פעם אך שכח שכבר בתוך הסוגריים של הלולאה בחלקה השלישי הדבר נעשה...או שהוא התכוון להדפיס את המשתנה פו שבתוך הבלוק... כלומר יכול להיות שהתכנית באמת שגויה כיוון שהיא בניגוד למה שהוא התכוון... שגיאה של הגיון...
+
+
+/*********************************תרגיל 7 ***********************************/
+
+int similar(int number1, int number2) {
+	if (number1 < 0)//אם המספר הוא מינוס מבחינת התכנית  זה לא משנה כי בודקים רק ספרות זהות במיקומים ולכן בשביל שנוכל להפעיל על המספר פעולת מודולו נהפוך אותו למספר חיובי כי מודולו לא עובד על מספר שלילי 
+		number1 *= -1;
+	if (number2 < 0)//כנל גם לגבי המספר השני
+		number2 *= -1;
+	int same = 0;
+	while (number1 != 0 && number2 != 0)
+	{
+		if (number1 % 10 == number2 % 10)//אם מספר האחדות של מספר 1 שווה למספר האחדות של מספר 2
+			same++;
+
+		number1 /= 10;//כאן אנחנו מוחקים כביכול את ספרת האחדות והופכים את המספר למספר ללא ספרת האחדות 
+		number2 /= 10;
+	}
+	if (number1 == number2)//אם הם שווים באורכם אז יהיה פה  0 == 0
+		return same;
+	return -1;
+}
+
+
+/*********************************תרגיל 9 ***********************************/
+int inTheSerie(int size, int number) {
+	int i;
+	static int times = 0;
+	int alreadyInThisNumber = 0;
+	for ( i = 1; i <= size; i++)
+	{
+		alreadyInThisNumber = 0;
+		int currentNumber;
+		printf("enter the %d number of the serie:\n",i);
+		scanf("%d", &currentNumber);
+		while (currentNumber != 0)
+		{
+			if (currentNumber % 10 == number && alreadyInThisNumber == 0)
+			{
+				times++;
+				alreadyInThisNumber = 1;
+			}
+			currentNumber /= 10;
+		}
+	}
+	return times;
+}
+
+
+
+/*********************************תרגיל 10 ***********************************/
+
+int theNumber = 0;//משתנה גלובלי
+
+int middleLines(int number) {
+	int num = number % 10;//ספרת האחדות של המספר
+	int num2 = 0;
+	while (number != 0)
+	{
+		num2 = number % 10;//רוצה לשמור את הספרה הראשונה של המספר, כשנצא מהלולאה הספרה הראשונה במספר יהיה שמור פה
+		number /= 10;
+	}
+	if (num == num2 && num == theNumber)// נשאל אם הספרות בצדדים שוות למספר שבו התחלנו שזה בעצם המספר הגלובלי
+		return 1;
+	else
+		return 0;
+}
+
+int updownLines(int number) {
+	int GoodOrNot = 1;
+	static int num = number % 10;//רוצה להגדיר שהמספר הזה ישמר לארוך כל התכנית ולא כל פעם שקוראים לפונקציה זה ישתנה
+	theNumber = num;//נשים במספר הגלובלי את המספר
+	while (number != 0)
+	{
+		if (number % 10 != theNumber)//בודק שאין מספר שהוא לא המספר הגלובלי שלנו כי הכל חייב להיות שווה אליו
+		{
+			GoodOrNot = 0;
+		}
+		number /= 10;
+	}
+	return GoodOrNot;
+}
+
+int borderlines(int lines) {
+	int i, number, GoodOrNot = 1;
+	printf("enter the numbers with a space between them:");
+	for (i = 1; i <= lines; i++)
+	{
+		scanf("%d", &number);
+		if (i == 1 || i == lines)
+		{
+			if (updownLines(number) == 0)//כלומר לא כל המספרים אותו דבר
+			{
+				GoodOrNot = 0;
+			}
+		}
+		else
+		{
+			if (middleLines(number) == 0)//אם היה מספר שהספרה הראשונה והאחרונה לא שווים למספר הגלובלי
+			{
+				GoodOrNot = 0;
+			}
+		}
+		printf("%d\n", number);
+	}
+	return GoodOrNot;
+}
+
+	

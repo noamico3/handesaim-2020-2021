@@ -1,0 +1,365 @@
+/********************************שאלה 1*********************************/
+-----------------א------------------
+1. if(!arr)
+2. if(arr == NULL)
+
+------------------ב------------------
+1. assert(arr)
+2. assert(arr != NULL)
+
+-----------------ג-------------------
+הפקודה אסרט תעיף אותו עוד לפני שהוא בכלל יכנס לבלוק וההדפסה שבבלוק לא תתבצע
+
+/********************************שאלה 2*********************************/
+---------------------א-------------------------
+המחרוזת בשורה 10 תהיה בגודל 0. כיוון שזהו מצביע יש לו פוטנציאל להיות מחרוזת אך הוא לא מצביע על כלום ולכן הוא לא מחרוזת ואורך המחרוזת כביכול הוא 0
+---------------------ב-------------------------
+הכרחית למה?
+אם נרצה לא לתקוע את המחשב ולשמור על הזכרון שלנו אז כן היא הכרחית אך אם לא אכפת לנו מהזכרון ומהמחשב ואכפת לנו רק מהרצת התכנית אז היא לא הכרחית
+---------------------ג-------------------------
+מה שיקרה זה שוורד מעכשיו יצביע על הסטרינג וורד אריי ולהקצאה הדינמית שעשינו בהיפ כבר לא נוכל לגשת אליה ולעשות לה פרי כיוון שכבר אין משהו שמצביע עליה לכן לאחר שנעשה פרי לוורד הוא יתן לנו שגיאת זמן ריצה כי כבר וורד לא מצביע לזכרון בהיפ
+
+/********************************שאלה 3*********************************/
+במקרה שלא היה מספיק זיכרון פנוי להקצאה
+
+/********************************שאלה 4*********************************/
+
+אנחנו הקצנו זכרון דינמי של 1024 מקומות של ינטים. כיוון שזה זכרון דינמי הוא נבנה בזכרון של ההיפ ולכן נתחייב לעשות לו פרי מתישהו
+אך אנחנו רואים שבתוך הפונקציה אין פרי ולכן זה כבר לא טוב
+אבל, יש לנו אופציה לעשות לו אולי פרי אחר כך בכך שאנחנו נחזיר מהפונקציה איזשהו מצביע לכתובת הזו בהיפ ואז נעשה דרך המצביע שהחזרנו את הפרי
+אבל אנחנו רואים שאנחנו לא מחזירים מצביע לכתובת של המערך שבנינו בתוך הפונקציה ובכללי הפונקציה מחזירה וויד
+כיוון שלא עשינו למיקום הזה בזכרון בסוף פרי בשום מקום בתכנית הוא ישאר שם ולא נוכל לגשת אליו יותר וזה יצור עומס על המחשב וזו טעות נוראית
+לכן שתי הטעויות הן שלא החזרנו את הכתובת להקצאה הדינמית מהפונקציה והשגיאה השניי שכלל לא שיחררנו את המקום הזה בסוף התכנית ולכן יהיה זכרון בהיפ תפוס שאי אפשר לגשת אליו
+/********************************שאלה 5*********************************/
+void*  My_calloc(unsigned one,int size) {
+	int i;
+	char* ptr = (char*)malloc(one * size);//השתמשתי בטיפוס צ'אר מכיוון שהוא בית אחד
+	for ( i = 0; i < one*size; i++)//נעבור בית בית ונאפס אותו
+		ptr[i] = 0;
+	return (void*)ptr;//נשנה את המצביע להיות מסוג וויד כי זה מה שמחזיר באמת קאלוק
+}
+
+/********************************שאלה 6*********************************/
+כיוון שהמשתנה סייז שאנחנו מעבירים לפונקציה אין בו שימוש כלל אז הוא תמיד יעשה סייז(גדול) של 31 ויחזיר 2 כלומר תמיד יעשה מקום חדש של 2 בתים רק 
+אך גם זה לא באמת יקרה כיוון שההעברה לפונקציה אינה נכונה
+ לכן אם הבאפר של המיין יהיה בגודל של 1 כלומר סייז אופ ינט, אז הוא כביכול יגדיל את המקום פי 2 אך רק כביכול 
+עקב מה שהסברתי וכיוון שהוא לא באמת מגדיל כי הוא לא מועבר טוב לפונקציה אז הפונקציה תלא תגדיל כלל את הבאפר האמיתי של המיין 
+בנוסף הוא גם לא יגדיל את הבאפר שמוגדר בפונקציה עצמה כיוון שהוא לא נמצא בהיפ ורילוק עושה הקצאה מחדש ולא הקצאה כמו מאלוק
+
+
+
+----------------------ב------------------------
+1.  טעות ראשונה שהבאפר לא מאותחל והוא גם צריך להיות מאותחל בהיפ כלומר לעשות לו מאלוק כדי שנוכל לעשות לו רילוק כי רילוק מבצע הקצאה מחדש לזכרון בהיפ בלבד 
+2. בנוסף לזה שהוא לא מאותחל הוא גם כביכול לא מועבר לפונקציה אלא רק העתק שלו מועבר ולכן כל מה שיתבצע בפנים יתבצע על סתם העתק וכשנצא מהפונקציה כל הזכרון של הפונקציה ימחק וזה לא השפיע על כלום באמת
+----------------------ג-------------------------
+void GetMoreSpace(int** buffer, int size) {
+	*buffer = (int*)realloc(*buffer, size * sizeof(int));// זה לא עוזר שיהיה כפול סייז גדול של 31 אנחנו צריכים כפול הסייז שהעבירו לנו בפונקציה
+}
+
+void main()
+{
+	int size,*buffer = (int*)malloc(sizeof(int)*1);
+	printf("please enter the size of the buffer: ");
+	scanf("%d", &size);
+	GetMoreSpace(&buffer,size);
+	free(buffer);
+}
+
+/********************************שאלה 7*********************************/
+כיוון שאנחנו מחזירים 2 ערכים נבנה לנו מבנה שמכיל 2 ערכים, גודל ופויינטר שהוא בעצם יהיה המערך הגדול
+struct ARR_BIG {
+	int size;
+	int* arr;
+	
+}typedef arr_big;
+
+arr_big* Getlchud(int arr1[], int size1, int arr2[], int size2) {// אנחנו נחזיר פויינטר למערך כיוון שאנחנו מחזירים מיקום לכתובת בהיפ כי אנחנו רוצים שזה ישמר לאחר שנצא מהפונקציה
+	int i;
+	arr_big* bigArr = (arr_big*)malloc(sizeof(arr_big));//נקצה זיכרון למבנה שלנו בהיפ
+	bigArr->size = size1 + size2;
+	bigArr->arr = (int*)malloc(sizeof(int) * (size1 + size2));//נקצה זכרון למערך שבמבנה בהיפ
+	for (i = 0; i < size1; i++) //נשים את הערכים של המערך הראשון במערך הגדול
+		if (i < size1)
+			bigArr->arr[i] = arr1[i];
+	for ( i = size1; i < size1 + size2; i++)//נשים את האיברים שבמערך השני במערך הגדול
+		bigArr->arr[i] = arr2[i-size1];
+	return bigArr;//נחזיר את המבנה
+}
+/*חשוב לציין שאת הכל הגדרנו בהיפ  כי אנחנו רוצים שזהכרונות הללו ישמרו לאחר שנצא מהפוקנציה*/
+
+void main()
+{
+	int arr1[3] = { 1,2,3 };
+	int arr2[4] = { 1,2,3,4 };
+	arr_big* bigArr = Getlchud(arr1, 3, arr2, 4);
+	for (int i = 0; i < bigArr->size; i++)
+		printf("%d", bigArr->arr[i]);
+	free(bigArr->arr);//חשוב לשחרר קודם את המערך 
+	free(bigArr);
+}
+
+/********************************שאלה 8*********************************/
+#include <time.h>//נצטרך בשביל ההגרלת מספר רנדומלית
+void main()
+{
+	int size,i;
+	srand(time(0));//בשביל הגרת מספר רנדומלית בהמשך
+	printf("enter size:");
+	scanf("%d", &size);
+	int* arr = (int*)malloc(sizeof(int) * size);
+	for (i = 0; i < size; i++) {
+		arr[i] = rand() % 10;
+		printf("[%d],", arr[i]);
+	}
+
+	int luckyNumber = rand() % 10;
+	printf("\nthe lucky number is: %d\n", luckyNumber);
+	int* arrOfLucky;
+	int sizeOfLuckyArr = 0;
+	for ( i = 0; i < size; i++)
+	{
+		if (arr[i] == luckyNumber)
+		{
+			if (sizeOfLuckyArr == 0)
+				arrOfLucky = (int*)malloc(sizeof(int));
+			else
+				arrOfLucky = (int*)realloc(arrOfLucky, sizeof(int) * (sizeOfLuckyArr + 1));
+			arrOfLucky[sizeOfLuckyArr] = i;
+			sizeOfLuckyArr++;
+
+		}
+	}
+	if (sizeOfLuckyArr != 0)//רק אם היה זוכה נדפיס את המערך ונשחרר אותו אחר כך כי אם לא היה כלום אסור לנו לעשות לו פרי כי אין בו כלום
+	{
+		for (i = 0; i < sizeOfLuckyArr; i++)
+			printf("[%d],", arrOfLucky[i]);
+		free(arrOfLucky);
+	}
+	else
+	    	printf("no winner this time");
+	free(arr);
+	
+}
+
+
+/********************************שאלה 9*********************************/
+typedef char string[255];
+void main()
+{
+	int count = 0,i;
+	string str1;
+	printf("enter the string:");
+	gets(str1);
+	printf("enter a char:");
+	char c = getchar();
+	char* ptr = str1;
+	while (*ptr != NULL)
+	{
+		if (*ptr == c)
+			count++;
+		ptr++;
+	}
+	string strFinal;
+	for ( i = 0; i < count; i++)
+	{
+		strFinal[i] = c;
+	}
+	strFinal[i] = NULL;//כשהוא יצא מהלולאה המיקום הבא במחרוזת צריך להיות נאל וכך נעצור שם את המחרוזת
+	printf("%s", strFinal);
+}
+------------------------------------------------------
+קלטים חכמים
+-------------------------------------------------------
+להכניס סטרינג עם רווח גם באמצע
+לא להכיס כלום
+
+
+/********************************שאלה 10*********************************/
+
+struct POINT {
+	double x;
+	double y;
+}typedef point;
+
+struct polygon {
+	int numOfPoints;
+	point* arrPoint = (point*)malloc(sizeof(point));
+}typedef Polygon;
+
+
+void printPolygon(Polygon metzula) {//עדיף להעביר ביי ווליו כי הפונקציה בסהכ מדפיסה ואין שום צורך שהיא תיגע לי במצולע המקורי
+	printf("------------------------------------\nnumber of points in the polygon:%d\n", metzula.numOfPoints);
+	int i;
+	for ( i = 0; i < metzula.numOfPoints; i++)
+		printf("point %d: (%lf,%lf)\n", i + 1, metzula.arrPoint[i].x, metzula.arrPoint[i].y);
+	printf("------------------------------------\n");
+}
+
+
+void main()
+{
+	srand(time(0));
+	int i,j;
+	point a, b, c, tmp;
+	a.x = 0;
+	a.y = 0;
+	b.x = 8;
+	b.y = 8;
+	c.x = 4;
+	c.y = 1;
+	Polygon metzula;
+	printf("how many points the metzula has:");
+	scanf("%d", &metzula.numOfPoints);
+	metzula.arrPoint = (point*)realloc(metzula.arrPoint, sizeof(point) * metzula.numOfPoints);
+	metzula.arrPoint[0] = a;
+	metzula.arrPoint[1] = b;
+	metzula.arrPoint[2] = c;
+	for ( i = 3; i < metzula.numOfPoints; i++)
+	{
+		int check = 1,flag = 1;
+		while (check) {
+			tmp.x = rand() % 20;//עשיתי מודלו 20 רק כדי שלא יהיה מספר יותר מדי גדול
+			tmp.y = rand() % 20;
+			flag = 1;
+			for (j = 0; j < i; j++)
+			{
+				if (tmp.x == metzula.arrPoint[j].x && tmp.y == metzula.arrPoint[j].y) {//אם הנקודה המוגרלת כבר הייתה
+					flag = 0;
+					break;//אין טעם להמשיך לבדוק את השאר כי אנחנו כבר יודעים שהנקודה הזו לא מתאימה
+				}
+			}
+			if (flag == 1)//כלומר לא היה לפני  את הנקודה הזו
+				check = 0;
+		}
+		metzula.arrPoint[i] = tmp;
+	}
+	printPolygon(metzula);
+	free(metzula.arrPoint);
+}
+
+------------------------------------------------------
+קלטים חכמים
+-------------------------------------------------------
+לעשות מצולע בעל הרבה קודקודים על מנת לראות שלא יוצא את אותו קודקוק
+
+
+/********************************שאלה 11*********************************/
+
+*לסעיף ג ולסעיף ז מצורפות תמונות
+
+#define MAXKIDS 20
+struct Person {
+	char* name = (char*)malloc(sizeof(char));//רק אתחול על מנת שנוכל אחר כך לעשות לו ריאלוק
+	int ID;
+}typedef person;
+
+struct Family {
+	person mom;
+	person dad;
+	person* kids = (person*)malloc(sizeof(person)*MAXKIDS);
+}typedef family;
+
+
+void setName(person* p) {
+	char c;
+	int sizeOfName = 0;
+	printf("enter a name:");
+	while ((c = getchar()) != '\n')
+	{
+		p->name = (char*)realloc(p->name, sizeOfName + 1);
+		p->name[sizeOfName] = c;
+		sizeOfName++;
+	}
+	while (sizeOfName == 0)
+	{
+		printf("enter a name:");
+		while ((c = getchar()) != '\n')
+		{
+			p->name = (char*)realloc(p->name, sizeOfName + 1);
+			p->name[sizeOfName] = c;
+			sizeOfName++;
+		}
+	}
+	p->name[sizeOfName] = '\0';
+}
+
+void setId(person* p) {
+	printf("enter ID:");
+	scanf("%d", &p->ID);
+	while (p->ID <1000 || p->ID >9999)
+	{
+		printf("enter ID:");
+		scanf("%d", &p->ID);
+	}
+}
+
+void setPerson(person* p) {
+	setName(p);
+	setId(p);
+}
+
+
+
+void setFamily(family* f,int howManyKids) {
+	printf("-------------------mom-----------------------\n");
+	setPerson(&f->mom);
+	printf("-------------------dad------------------------\n");
+	setPerson(&f->dad);
+	int i;
+	printf("-------------------kids----------------------\n");
+	for ( i = 0; i < howManyKids; i++)
+		setPerson(&f->kids[i]);
+}
+
+void printPerson(person p) {
+	printf("----------------------\n");
+	printf("name: %s\n", p.name);
+	printf("ID: %d\n", p.ID);
+	printf("----------------------\n");
+
+}
+
+
+void printFamily(family f,int howManyKids) {
+	printf("------------------------------------------------------------\n");
+	printf("-------------------dad------------------------\n");
+	printPerson(f.dad);
+	printf("-------------------mom-----------------------\n");
+	printPerson(f.mom);
+	int i;
+	printf("-------------------kids----------------------\n");
+	for ( i = 0; i < howManyKids; i++)
+		printPerson(f.kids[i]);
+	printf("------------------------------------------------------------\n");
+}
+
+void main()
+{
+	family a;
+	int howManyKids = 5, i;
+	person p1, p2, p3, p4, p5;
+	person arr[MAXKIDS] = { p1, p2, p3, p4, p5 };
+	for (i = 0; i < howManyKids; i++)
+		a.kids[i] = arr[i];
+	setFamily(&a, howManyKids);
+	printFamily(a, howManyKids);
+	free(a.dad.name);
+	free(a.mom.name);
+	free(a.kids);
+}
+
+
+---------------------------------------------------------------------
+קלטים חכמים
+-------------------------------------------------------------------
+תז מעל 4 ספרות
+תז מתחת ל4 ספרות
+שם ללא אות אחת
+שם ארוך מאוד
+
+
+
+
+
+
+

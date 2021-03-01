@@ -1,0 +1,529 @@
+
+/***********************************תרגיל 1************************************/
+void main() {
+	enum size { SIZE = 3 };
+	char arr[SIZE][SIZE];
+	int rows,cols;
+	for ( rows = 0; rows < SIZE; rows++)
+	{
+		for ( cols = 0; cols < SIZE; cols++)
+		{
+			if (rows == cols || rows+cols == SIZE-1)
+			{
+				arr[rows][cols] = 'X';
+			}
+			else
+				arr[rows][cols] = '   ';
+		}
+	}
+	for (rows = 0; rows < SIZE; rows++)
+	{
+		for (cols = 0; cols < SIZE; cols++)
+		{
+			printf("%c", arr[rows][cols]);
+		}
+		printf("\n");
+	}
+}
+
+-----------------------------מקרי בדיקה------------------------------
+אם יהיה מספר שלילי אז התכנית לא תעבוד כיוון שהמערך לא יכול לקבל גודל שלילי אך אין לנו אופציה לקבל באמת מהמשתמש מספר כי אז הוא לא יהיה קונסט ולכן במקרה זה אחנו סומכים על המשתמש שיכניס ערך חיובי או אפס.
+במקרה של מספר זוגי יהיה באמצע האיקס כמו מרובע קטן 
+במקרה של מספר אי זוגי האיקס יהיה מושלם
+
+/***********************************תרגיל 2************************************/
+void main() {
+	int max = 0,check = 0, counter = 0, number = 9;
+	enum size { rows = 3,cols = 4 };
+	char arr[rows][cols] = { {8,0,1,1} ,{6,8,9,1}, {8,7,0,6} };
+	int i,j;
+	for (i = 0; i < cols; i++)//עובר על העמודות
+	{
+		counter = 0;
+		for (j = 0; j < rows; j++)//עובר על  השורות
+		{
+			if (arr[j][i] == number)
+				counter++;
+		}
+		if (i == 0)//זה כי אני ורצה לדעצ האם האפס של מקס הוא בגלל ה0 ההתחלתי או בגלל שאיי באמת היה 0
+			check = counter;//אם המונה פה הוא 0 זה אומר שלא היה מספר בסבב שאיי שווה 0 וה0 שיש במקס זה הערך ההתחלתי ולכן נשנה משתנה ולפיו נדע אחר כך של מה ה-0
+		if (counter > max)
+			max = i;
+	}
+	if (check == 0 && max == 0)//כאן אנחנו בודקים האם ה0 הוא ההתחלתי של מקס או שה-0 זה הערך של איי
+		printf("the number is not in the matrix!\n");
+	else
+		printf("%d\n", max);
+	
+}
+-----------------------------מקרי בדיקה------------------------------
+אם כל המספרים זהים במטריצה הוא יקח את העמודה האחרונה 
+אם אין בכלל את המספר אז הוא ירשום שאין את המספר במטריצה
+אם יש בשתי עמודות אותה כמות של המספר הוא יקח את העמודה האחרונה מבניהן
+
+/***********************************תרגיל 3************************************/
+int isSame(char arr[], int size) {
+	char first = arr[0];
+	int i;
+	for (i = 1; i < size; i++)
+	{
+		if (arr[i] != first)
+		{
+			return 0;
+		}
+	}
+	return 1;
+}
+
+--------------------------------------------------------------------------------
+
+void main() {
+	char arr[5];
+	int i;
+	for (i = 0; i < 5; i++)
+	{
+		printf("enter number %d:", i + 1);
+		scanf("\n%c", &arr[i]);
+	}
+	if (isSame(arr, 5) == 0)
+		printf("no");
+	else
+		printf("yes");
+}
+
+-----------------------------מקרי בדיקה------------------------------
+
+אם הכל שווה הפונקציה תחזיר 1
+אם לא הכל שווה אז הפונקציה תחזיר 0
+
+
+/**********************************תרגיל 4************************************/
+int sum(int arr[], int size) {
+	int i,sum = 0;
+	for ( i = 0; i < size; i++)
+	{
+		sum += arr[i];
+	}
+	return sum;
+}
+-----------------------------מקרי בדיקה------------------------------
+יכולים לקבל במערך גם מספרים חיוביים וגם שלילים אבל זה לא משפיע על התכנית
+
+/***********************************תרגיל 5************************************/
+void reverseArray(int arr[],int size) {
+	int tail = size - 1,head = 0,temp;
+	while (head < tail)
+	{
+		temp = arr[head];
+		arr[head] = arr[tail];
+		arr[tail] = temp;
+		head++;
+		tail--;
+	}
+}
+-----------------------------מקרי בדיקה------------------------------
+אם נקבל מערך אי זוגי התכנית לא תחליף את האיבר האמצעי בעצמו כי זה סתם יהיה בזבוז... אם יהיה מערך זוגי כל האיברים יתחלפו בהפכים של המיקום שלהם
+אם יהיה מערך של מערך אחד לא יתבצע כלום כי כבר מההתחלה ההד והטייל יהיו שווים ולא יכנסו לוייל
+
+/***********************************תרגיל 6************************************/
+
+-----------------------------------O(n^2)----------------------------------
+const int N = 3;
+int SumOfDiagonal(int arr[N][N]) {
+	int i,j;
+	int sum = 0;
+	for ( i = 0; i < N; i++)
+	{
+		for ( j = 0; j < N; j++)
+		{
+			if (i == j)
+			{
+				sum += arr[i][j];
+			}
+		}
+	}
+	return sum;
+}
+
+
+--------------------------------O(n)--------------------------------------
+const int N = 3;
+int SumOfDiagonal(int arr[N][N]) {
+	int i;
+	int sum = 0;
+	for ( i = 0; i < N; i++)
+	{
+		sum += arr[i][i];
+	}
+	return sum;
+}
+
+-----------------------------מקרי בדיקה------------------------------
+N חייב להיות חיובי
+
+
+/***********************************תרגיל 7************************************/
+void main() {
+	char arr[10]= {'1','1','1','2','2','2','2','7','8','@' };
+	char temp[10];
+	int i,j,check = 0,head = 0;
+	for ( i = 0; i < 10; i++)
+	{
+		check = 0;
+		for ( j = 0; j < i; j++)
+		{
+			if (arr[i] == arr[j])
+				check = 1;
+		}
+		if (check == 0)
+		{
+			temp[head] = arr[i];
+			head++;
+		}
+	}
+	printf("number of chars = %d\n", head);
+	for ( i = 0; i < head; i++)
+		printf("%c", temp[i]);
+}
+
+-----------------------------מקרי בדיקה------------------------------
+
+אם כל התווים שונים הוא ידפיס 10 ואת כל 10 התווים
+אם כל התווים שווים הוא ידפיס שיש תו אחד וידפיס אותו
+יש גם מקרה רגיל שיש כמה תווים אותו דבר וכמה לא
+
+//////////////////////////////////////////  ראה תמונה מצורפת  //////////////////////////////////
+
+
+
+
+/***********************************תרגיל 8************************************/
+int in(char arr[], int size, char c) {
+	int i = 0, counter = 0;
+	for (i = 0; i < size; i++)
+	{
+		if (c == arr[i]) {
+			counter++;
+		}
+	}
+	return counter;
+}
+
+
+
+void main() {
+	typedef char string[256];
+	int i = 0,head = 0,j,counter = 0;
+	string s1 = { 'a','a','b','b','b','@','z','o','i','c','!' };
+	string temp;
+	while (s1[i] != '\0')
+	{
+		if (s1[i] >= 'a' && s1[i] <= 'z')
+		{
+			if (!in(temp,head,s1[i]))
+			{
+				temp[head] = s1[i];
+				head++;
+			}
+		}
+		i++;
+	}
+	for ( i = 0; i < head; i++)
+	{
+		j = counter = 0;
+		printf("%c:", temp[i]);
+		while (s1[j] != '\0')
+		{
+			if (temp[i] == s1[j])
+			{
+				counter++;
+			}
+			j++;
+		}
+		printf("%d\n", counter);
+	}
+}
+
+-----------------------------מקרי בדיקה------------------------------
+
+אם כל התווים שווים אז יודפס רק  התו וכמה פעמים שהוא מופיע
+אם כל התווים שונים אז לכל תו יהיה שהוא היה פעם אחת
+אסור שיהיה את התו \0 באמצע המחרוזת ואם כן אז התכני תעבוד רק עד התו הזה
+
+
+/***********************************תרגיל 9************************************/
+const int size = 5;
+void main() {
+	float arr[size][size] = {  	{1,5,9,-7,-7.7},
+				{4,6,1,2,-6.15},
+				{7,8.2,-4,-2,5},
+				{6,4.8,7,-9.4,2},
+				{1,0,4.8,7,-1}};
+	int i = 0, j = 0, z = 0, temp;
+	for ( i = 0; i < 5; i++)
+	{
+		for (z = size-1; z > 0; z--)
+		{
+			for (j = 0; j < z; j++)
+			{
+				if (arr[j][i] > arr[j + 1][i])
+				{
+					temp = arr[j][i];
+					arr[j][i] = arr[j + 1][i];
+					arr[j + 1][i] = temp;
+
+				}
+			}
+		}
+	}
+
+	for (i = 0; i < 5; i++)
+	{
+		for (z = size - 1; z > 0; z--)
+		{
+			for (j = 0; j < z; j++)
+			{
+				if (arr[i][j] > arr[i][j + 1])
+				{
+					temp = arr[i][j];
+					arr[i][j] = arr[i][j + 1];
+					arr[i][j + 1] = temp;
+
+				}
+			}
+		}
+	}
+
+}
+
+-----------------------------מקרי בדיקה------------------------------
+SIZE חייב להיות חיובי
+
+/***********************************תרגיל 10************************************/
+
+void initGame(char arr[3][3]) {//הפונקציה מאתחלת את המשחק ושמה בכל אחד מהמקומות רווח על מנת שכשנדפיס את לוח המשחק בכל פעם הוא יראה יפה
+	int i, j;
+	for (i = 0; i < 3; i++)
+	{
+		for (j = 0; j < 3; j++)
+		{
+			arr[i][j] = ' ';
+		}
+	}
+}
+
+
+int checkLine(char arr[3][3],int line) {//הפונקציה בודקת אם היה ניצחון בשורה שהעבירו לה
+	int j;
+	for (j = 0; j < 2; j++)
+	{
+		if (arr[line][j] != arr[line][j + 1] || arr[line][0] == ' ')//החלק השני של התנאי הוא בשביל לראות שלא מדובר ברווח כי אנחנו מאתחילים את הלוח ברווחים ולא נרצה שהוא יגיד לנו בגלל הרווחים שיש נצחון
+		{
+			return 0;
+		}
+	}
+	return 1;
+}
+int checkLines(char arr[3][3]) {//בודקת האם היה ניצחון בשורה כלשהי
+	int i,j;
+	for (i = 0; i < 3; i++)
+	{
+		if (checkLine(arr,i) == 1)
+		{
+			return 1;
+		}
+	}
+	return 0;
+}
+
+int checkCol(char arr[3][3], int col) {//הפונקציה בודקת אם היה ניצחון בעמודה שהעבירו לה
+	int j;
+	for (j = 0; j < 2; j++)
+	{
+		if (arr[j][col] != arr[j+1][col] || arr[0][col]  == ' ')//החלק השני של התנאי הוא בשביל לראות שלא מדובר ברווח כי אנחנו מאתחילים את הלוח ברווחים ולא נרצה שהוא יגיד לנו בגלל הרווחים שיש נצחון
+		{
+			return 0;
+		}
+	}
+	return 1;
+}
+
+int checkCols(char arr[3][3]) {//בודקת האם היה ניצחון בעמודה כלשהי
+	int i, j;
+	for (i = 0; i < 3; i++)
+	{
+		if (checkCol(arr, i) == 1)
+		{
+			return 1;
+		}
+	}
+	return 0;
+}
+
+int checkMainDiagonal(char arr[3][3]) {//הפונקציה בודקת האם היה נצחון באלכסון הראשי
+	int i;
+	for ( i = 0; i < 2; i++)
+	{
+		if (arr[i][i] != arr[i+1][i+1] || arr[0][0] == ' ')//החלק השני של התנאי הוא בשביל לראות שלא מדובר ברווח כי אנחנו מאתחילים את הלוח ברווחים ולא נרצה שהוא יגיד לנו בגלל הרווחים שיש נצחון
+		{
+			return 0;
+		}
+	}
+	return 1;
+}
+
+
+int checkOtherDiagonal(char arr[3][3]) {//הפונקציה בודקת האם היה ניצחון באלכסון הלא ראשי
+	int i;
+	for (i = 0; i < 2; i++)
+	{
+		if (arr[i][2-i] != arr[i+1][2 - (i + 1)] || arr[i][2 - i] == ' ')// המאפיין של האלכסון הוא שסכוםם האינדקסים של העמודה והשורה תמיד יהיו 2 ולכן תמיד נקפיד לשמור על היחס הזה. החלק השני של התנאי הוא בשביל לראות  שלא מדובר ברווח כי אנחנו מאתחילים את הלוח ברווחים ולא נרצה שהוא יגיד לנו בגלל הרווחים שיש נצחון 
+		{
+			return 0;
+		}
+	}
+	return 1;
+}
+
+
+int checkWin(char arr[3][3]) {//הפונקציה בודקת האם יש ניצחון
+	if (checkLines(arr) || checkCols(arr) || checkMainDiagonal(arr) || checkOtherDiagonal(arr))
+		return 1;
+	return 0;
+}
+
+int isTaken(char arr[3][3],int row,int col) {//הפונקציה בודקת האם בחרת מקום לא פנוי
+	if (arr[row][col] == 'x' || arr[row][col] == 'o')
+		return 1;
+	return 0;
+}
+
+int checkDraw(char arr[3][3]) {//הפונקציה בודקת תיקו
+	int i, j,counter = 0;
+	for ( i = 0; i < 3; i++)
+	{
+		for ( j = 0; j < 3; j++)
+		{
+			if (arr[i][j] == 'o' || arr[i][j] == 'x')
+			{
+				counter++;
+			}
+		}
+	}
+	if (counter == 9 && !checkWin(arr) )//כלומר כל הלוח מלא באיקס או עיגול ואין ניצחון
+		return 1;
+	return 0;
+}
+
+void printBoard(char arr[3][3]) {//הפונקציה מדפיסה את הלוח
+	int i, j;
+	for ( i = 0; i < 3; i++)
+	{
+		for ( j = 0; j < 3; j++)
+			printf("|%c|", arr[i][j]);
+		printf("\n");
+	}
+}
+
+
+void main() {
+	char arr[3][3];
+	char turn = 'x', tempchar1, char1;
+	int row, col,temp;
+	initGame(arr);
+	while ( !checkWin(arr) && !checkDraw(arr) )
+	{
+		printf("player %c:\nEnter the row you want:",turn);
+		scanf("%d", &temp);
+		while (temp > 2 || temp < 0)
+		{
+			printf("Error: the number is illigel\nplayer %c:\nEnter again the row you want:", turn);
+			scanf("%d", &temp);
+		}
+		row = temp;
+		printf("Enter the col you want:");
+		scanf("%d", &temp);
+		while (temp > 2 || temp < 0)
+		{
+			printf("Error: the number is illigel\nplayer %c:\nEnter again the col you want:", turn);
+			scanf("%d", &temp);
+		}
+		col = temp;
+		
+		if (isTaken(arr,row,col) == 1)
+		{
+			printf("\nthe place is taken,try again!\n\n");
+		}
+		else
+		{
+			printf("x\o?:");
+			scanf("\n%c", &tempchar1);
+			while (tempchar1 != 'x' && temp != 'o')
+			{
+				printf("Error: the char is illigel\nplayer %c:\nEnter again X\O:", turn);
+				scanf("\n%c", &tempchar1);
+			}
+			char1 = tempchar1;
+			arr[row][col] = char1;
+			if (turn == 'x')
+				turn = 'o';
+			else
+				turn = 'x';
+		}
+		printBoard(arr);
+	}
+	if (checkWin(arr) == 1)
+	{
+		if (turn == 'x')
+			printf("player o won!!!\n");
+		else
+			printf("player x won!!!\n");
+	}
+	else
+		printf("draw!");
+}
+
+
+-----------------------------מקרי בדיקה------------------------------
+אם המשתמש ינסה להכניס למקום תפוס עשיתי לולאה שתשאל שוב עד שהוא יכניס מקום פנוי
+אם השחקן יכניס תו שהוא לא איקס או עיגול אז שוב התכנית תשאל עד שנקבל איקס או עיגול
+אם השחקן יכניס עמודה או שורה שלא קיימת אז נודיע לו על שגיאה ושיבחר שוב
+בדקתי את כל מקרי הבדיקה האפשריים כבר בתכנית באמצעות לולאות וויל במיין
+
+/***********************************תרגיל 11************************************/
+const int size = 4;
+void main() {
+	int arr[size][size];
+	int RightToLeft = 0,i,j;
+	for ( i = 0; i < size; i++)
+	{
+		for ( j = 0; j < size; j++)
+		{
+			if (RightToLeft == 0)
+			{
+				scanf("%d,", &arr[i][j]);
+			}
+			if (RightToLeft == 1)
+			{
+				scanf("%d,", &arr[i][size-j-1]);//נתחיל לקלוט מסוף השורה אל ההתחלה
+			}
+		}
+		RightToLeft = !RightToLeft;
+	}
+
+	for (i = 0; i < size; i++)
+	{
+		for (j = 0; j < size; j++)
+		{
+			printf("%d,", arr[i][j]);
+		}
+		printf("\n");
+	}
+}
+
+
+
+-----------------------------מקרי בדיקה------------------------------
+
+SIZE חייב להיות חיובי
+

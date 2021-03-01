@@ -1,0 +1,6 @@
+void printListRec(LNode* lstN){
+	if(lstN == NULL)
+		return;
+	printf("%d",lst->data);
+	printListRec(lstN->next);
+}

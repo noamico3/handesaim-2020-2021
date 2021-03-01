@@ -1,0 +1,404 @@
+/**************************שאלה 1******************************/
+
+typedef char string[255];
+
+typedef struct {
+	string name;
+	unsigned long Id;
+	string adress;
+}person;
+
+typedef struct {
+	person p;
+	string cName;
+}Lecturer;
+
+typedef struct {
+	person p;
+	string course1;
+	string course2;
+	string course3;
+}student;
+
+void printPerson(person p) {
+	puts(p.name);
+	printf("%ld\n", p.Id);
+	puts(p.adress);
+}
+
+void printStudent(student s) {
+	printPerson(s.p);
+	printf("name of course1:");
+	puts(s.course1);
+	printf("name of course2:");
+	puts(s.course2);
+	printf("name of course3:");
+	puts(s.course3);
+	printf("\n");
+}
+
+void printLecturer(Lecturer l) {
+	printPerson(l.p);
+	printf("name of course:");
+	puts(l.cName);
+	printf("\n");
+}
+
+void scanPerson(person* p) {
+	printf("enter name:\n");
+	scanf("%s",p->name);
+	printf("enter ID:\n");
+	scanf("%d", &p->Id);
+	printf("enter adress:\n");
+	gets(p->adress);
+}
+
+void scanStudent(student* s)
+{
+	scanPerson(&s->p);
+	printf("enter course1:\n");
+	scanf("%s",s->course1);
+	printf("enter course2:\n");
+	scanf("%s",s->course2);
+	printf("enter course3:\n");
+	scanf("%s",s->course3);
+}
+
+void scanLecturer(Lecturer* l) {
+	scanPerson(&l->p);
+	printf("enter course name:\n");
+	scanf("%s",l->cName);
+}
+void main() {
+	Lecturer teacher;
+	student s1, s2, s3, s4, s5;
+	scanLecturer(&teacher);
+	scanStudent(&s1);
+	scanStudent(&s2);
+	scanStudent(&s3);
+	scanStudent(&s4);
+	scanStudent(&s5);
+	printf("-------------------------------\n");
+	printLecturer(teacher);
+	printStudent(s1);
+	printStudent(s2);
+	printStudent(s3);
+	printStudent(s4);
+	printStudent(s5);
+}
+
+
+
+
+/*******************************************************שאלה 2****************************************************/
+
+typedef char string[255];
+
+typedef struct {
+	string name;
+	unsigned long Id;
+	string adress;
+}person;
+
+typedef struct {
+	person p;
+	string course1;
+	string course2;
+	string course3;
+	float grade;
+}student;
+
+void scanPerson(person* p) {
+	printf("enter name:\n");
+	scanf("%s",p->name);
+	printf("enter ID:\n");
+	scanf("%lu", &p->Id);
+	printf("enter adress:\n");
+	gets(p->adress);
+}
+
+void scanStudent(student* s)
+{
+	scanPerson(&s->p);
+	printf("enter course1:\n");
+	scanf("%s",s->course1);
+	printf("enter course2:\n");
+	scanf("%s",s->course2);
+	printf("enter course3:\n");
+	scanf("%s",s->course3);
+	printf("enter grade:\n");
+	scanf("%f",&s->grade);
+}
+
+student excellent(student arr[],int size){
+    int i;
+    student s = arr[0];
+    for(i = 1;i<size;i++){
+        if(s.grade < arr[i].grade)
+            s = arr[i];
+    }
+    return s;
+}
+
+void main() {
+	const int SIZE = 5;
+	student arr[SIZE];
+	int i;
+	for(i = 0;i<SIZE;i++)
+	    scanStudent(&arr[i]);
+	printf("-------------------------------\n");
+	printf("%s",excellent(arr,SIZE).p.name);
+}
+
+
+/***************************************************שאלה 3*******************************************************/
+typedef char string[255];
+
+typedef struct {
+	string name;
+	unsigned long Id;
+	string adress;
+}person;
+
+typedef struct {
+	person p;
+	string course1;
+	string course2;
+	string course3;
+	float grade;
+}student;
+
+void scanPerson(person* p) {
+	printf("enter name:\n");
+	scanf("%s",p->name);
+	printf("enter ID:\n");
+	scanf("%lu", &p->Id);
+	printf("enter adress:\n");
+	gets(p->adress);
+}
+
+void scanStudent(student* s){
+	scanPerson(&s->p);
+	printf("enter course1:\n");
+	scanf("%s",s->course1);
+	printf("enter course2:\n");
+	scanf("%s",s->course2);
+	printf("enter course3:\n");
+	scanf("%s",s->course3);
+	printf("enter grade:\n");
+	scanf("%f",&s->grade);
+}
+
+int isName(student arr[], int size, string name) {
+	int i;
+	for ( i = 0; i < size; i++)
+	{
+		if (strcmp(arr[i].p.name , name) ==  0)
+			return 1;
+	}
+	return 0;
+}
+
+void main() {
+	student arr[5];
+	int i;
+	for(i = 0;i<5;i++)
+	    scanStudent(&arr[i]);
+	printf("-------------------------------\n");
+	printf("%d",isName(arr,5,"noam"));
+}
+
+/***************************************************שאלה 4*******************************************************/
+typedef char string[255];
+struct {
+	int counter;
+	char c;
+}typedef Appear;
+
+int isAlphaLittle(char c) {
+	if (c >= 'a' && c <= 'z' )
+		return 1;
+	return 0;
+}
+
+int isAlphaBig(char c) {
+	if (c >= 'A' && c <= 'Z')
+		return 1;
+	return 0;
+}
+
+int diffrent(Appear arr[], string str) {
+	int i,j,dif = 0;
+	for (i = 0; i < 26; i++)//מאפס את כל המונים שבמערך ושם במקום את התו המתאים לו
+	{
+		arr[i].counter = 0;
+		arr[i].c = 'A' + i;
+	}
+	for (j = 0; j < strlen(str); j++)//עובר על הסטרינג
+	{
+		if (isAlphaLittle(str[j])) {//אם האות קטנה באלף בית
+			if(arr[str[j] - 'a'].counter == 0)//אם המונה הוא אפס זאת אומרת שפעם ראשונה שאנחנו פוגשים בו ולכן נעשה ++ לדיף
+				dif++;
+			arr[str[j] - 'a'].counter++;//בכל אופן נעשה ++ למקום שצריך וכך נשמור כמה פעמים יש מכל אות בסטרינג
+		}
+		if (isAlphaBig(str[j])) {//אם האות גדולה
+			if (arr[str[j] - 'A'].counter == 0)
+				dif++;
+			arr[str[j] - 'A'].counter++;
+		}
+	}
+	return dif;//נחזיר כמה אותיות שונות היה לנו
+}
+
+
+/***************************************************שאלה 5*******************************************************/
+
+clock_t addMinutes(clock_t c, int toAdd) {
+	int time = c.hours * 60 + toAdd + c.minutes; // נמיר את הכל לדקות
+	int hours = time / 60;//השעות יהיו כל הזמן חלקי 60 וזה יתעגל כלפי מטה כי זה ינט וזה טוב לנו
+	int minutes = time % 60;
+	c.hours = hours % 24;//על מנת שלא נגיע לשעה לא הגיונית ונשמור על התכונה המעגלית של השעות
+	c.minutes = minutes;
+	return c;
+ }
+
+void printClock(clock_t c) {
+	printf(" %d:%d\n", c.hours, c.minutes);
+}
+
+---------------------------------------------
+מקרי בדיקה
+---------------------------------------------
+12 30 50 - רגיל
+23 50 50 - שיעבור את השעה 24 לראות אם יהיה 0
+23 50 90 - שיעבור את 24 ולראות שהוא כן מגיע ל 1 וכו
+23 50 10 - שיהיה 0 גם בדקות וגם בשעות
+
+
+/***************************************************שאלה 7*******************************************************/
+const int SIZE = 4;
+void sortMat(int arr[SIZE][SIZE]) {
+	int i, j;
+	for ( i = SIZE-1; i > 0; i--)
+	{
+		for ( j = 0; j < i; j++)
+		{
+			if (arr[j][j] > arr[j + 1][j + 1])
+			{
+				int temp = arr[j][j];
+				arr[j][j] = arr[j + 1][j + 1];
+				arr[j + 1][j + 1] = temp;
+			}
+		}
+		
+	}
+}
+
+
+-------------------------------------------
+לבדיקה
+------------------------------------------
+void main() {
+	int arr[SIZE][SIZE] = { {9,3,6,5},
+			{2,4,8,2},
+			{7,2,2,1},
+			{9,8,3,6} };
+	int i, j;
+	for (i =  0; i < SIZE; i++)
+	{
+		for (j = 0; j < SIZE; j++)
+		{
+			printf("%d   ", arr[i][j]);;
+		}
+		printf("\n");
+	}
+	sortMat(arr);
+	printf("\n");
+	for (i = 0; i < SIZE; i++)
+	{
+		for (j = 0; j < SIZE; j++)
+		{
+			printf("%d   ", arr[i][j]);;
+		}
+		printf("\n");
+	}
+
+}
+
+/***************************************************שאלה 8*******************************************************/
+void sortString(string str) {
+	char temp;
+	int i, j;
+	string s;
+	strcpy(s,str);
+	strlwr(s);//ניצור עוד סטרינג ונהפוך את כולו לאותיות קטנות מכיוון שאם נעשה אחר גדול מ תמיד האותיות הגדולות יהיו יותר ובתרגיל אין חשיבות לאותיות גדולות או קטנות
+	for ( i = strlen(str) - 1; i > 0; i--)//נבצע מיון בועות
+	{
+		for ( j = 0; j < i; j++)
+		{
+			if (s[j] > s[j + 1])// בכל פעם שנצטרך, נבצע החלפה גם על המערך של האותיות הקטנות וגם על המערך המקורי ועל ידי כך לא נסתבך עם האותיות גדולות או קטנות כי בסה"כ זה אותם מיקומים. לכן את הבדיקה נבצע על האותיות הקטנות אך את ההחלפה נבצע בשתי המחרוזות
+			{
+				temp = str[j];
+				str[j] = str[j + 1];
+				str[j + 1] = temp;
+
+				temp = s[j];
+				s[j] = s[j + 1];
+				s[j + 1] = temp;
+			}
+		}
+	}
+}
+
+/***************************************************שאלה 9*******************************************************/
+typedef struct Location{
+	int col = -1;
+	int row = -1;
+}location;
+
+const int SIZE = 4;
+
+int binarySearch(int arr[], int l, int r, int number)
+{
+	while (l <= r) {
+		int middle = l + (r - l) / 2;
+		if (arr[middle] == number)
+			return middle;
+		if (arr[middle] < number)
+			l = middle + 1;
+		else
+			r = middle - 1;
+	}
+	return -1;
+}
+
+location findNumber(int mat[SIZE][SIZE], int number) {
+	int i,j;
+	int res;
+	int l = 0,r = SIZE;
+	location l;
+	int temp[SIZE];//חשבתי להעביר כל פעם עמודה למערך זמני ואותו לשלוח כל פעם לחיפוש בינארי אך זה כבר היה עובר את זמן הריצה הדרוש
+	for ( i = 0; i < SIZE; i++)
+	{
+		if(binarySearch() != -1)//פה נצטרך להעביר כל פעם עמודה אחרת אך אינני יודע איך להעביר לחיפוש בינארי עמודה
+			l.col = i;
+			l.row = binarySearch(......);
+			return l;
+	}
+	return l;//נזכור שבדיפולט שלו הוא -1 בשני הערכים
+	
+}
+
+void printLocation(Location l) 
+	printf("(row = %d,col = %d)", l.row, l.col);
+
+
+void main() {
+	int mat[SIZE][SIZE] = {    {2,1,5,1},
+			      {3,6,6,2},
+	      		      {8,7,7,3},
+			      {9,8,9,4} };
+	printLocation(findNumber(mat, 4));
+	
+}
+

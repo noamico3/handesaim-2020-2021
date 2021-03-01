@@ -1,0 +1,206 @@
+/********************************שאלה 1*******************************/
+int in(int arr[],int number) {// ידוע שהפונקציה תעבוד רק על מערך בגודל חמש אך זה המקרה שלנו כאן ואין כלל אפשרות למשתמש להכניס עוד ערכים למערך מעבר לחמישה ערכים ולכן איני דואג מכך
+	int i = 0,counter = 0;
+	for ( i = 0; i < 5 ; i++)
+	{
+		if (number == arr[i]) {
+			counter++;
+		}
+	}
+	return counter;
+}
+
+int deleteDuplicate(int arr[]) {//הפונקציה מקבלת מערך ומוחקת את כל הערכים הקיימים פעמיים במערך ומחזירה את הגודל החדש של המערך
+	int head = 0;
+	int i = 5;
+	int arr1[5];
+	for ( ; i >= 0; i--)
+	{
+		if ( !in(arr1,arr[i]) )
+		{
+			arr1[head] = arr[i];
+			head++;
+		}
+	}
+	for ( i = head-1; i >= 0; i--)
+	{
+		arr[i] = arr1[i];
+	}
+	return head;
+}
+
+
+void main() {
+	int arr1[5];
+	int arr2[5];
+	int arr3[5];
+	int arr4[5];
+	int i, j, head = 0 ;
+	for (i = 0; i < 5; i++)
+	{
+		printf("enter number %d for arr1:\n", i + 1);
+		scanf("%d", &arr1[i]);
+	}
+	for (i = 0; i < 5; i++)
+	{
+		printf("enter number %d for arr2:\n", i + 1);
+		scanf("%d", &arr2[i]);
+	}
+	for (i = 0; i < 5; i++)
+	{
+		printf("enter number %d for arr3:\n", i + 1);
+		scanf("%d", &arr3[i]);
+	}
+
+	for ( i = 0; i < 5; i++)//הלולאה הזו שמה במערך4 את כל הערכים המשותפים לשלושת המערכים
+	{
+		if (in(arr2,arr1[i]) && in(arr3, arr1[i]))
+		{
+			arr4[head] = arr1[i];
+			head++;
+		}
+	}
+
+	head = deleteDuplicate(arr4);//נמחק את הערכים הכפולים במערך4 ונחזיר את אורכו אל תוך המשתנה הד
+	for ( i = 0; i < head; i++)//כאן נבדוק כל מספר משותף שיש לכולם באיזה אינדקסים הוא נמצא אצל כל מערך ונדפיס את האינדקסים של כל אחד
+	{
+		printf("arr1:");
+		for ( j = 0; j < 5;j++)
+		{
+			if (arr1[j] == arr4[i])
+			{
+				printf("%d ", j);
+			}
+		}
+		printf(" =arr2:");
+		for (j = 0; j < 5; j++)
+		{
+			if (arr2[j] == arr4[i])
+			{
+				printf("%d ", j);
+			}
+		}
+		printf(" =arr3:");
+		for (j = 0; j < 5; j++)
+		{
+			if (arr3[j] == arr4[i])
+			{
+				printf("%d ", j);
+			}
+		}
+		printf("\n");
+	}
+}
+/********************************שאלה 2*******************************/
+void main() {
+	int arr[10];
+	int i,counter = 0,size = 10,minimum;
+	for ( i = 0; i < 10; i++)
+	{
+		printf("enter number %d for arr1:\n", i + 1);
+		scanf("%d", &arr[i]);
+	}
+	minimum = arr[0];
+	for (i = 1; i < size; i++)
+	{
+		if (arr[i] < minimum)
+		{
+			minimum = arr[i];
+		}
+	}
+	printf("the indexes of the minimum number is:");
+	for  ( i = 0; i < 10; i++)
+	{
+		if (arr[i] == minimum)
+		{
+			counter++;
+			printf("%d ", i);
+		}
+	}
+	printf("\n");
+	printf("the minimum number showed up %d times in the array.\n", counter);
+}
+
+/********************************שאלה 3*******************************/
+void main() {
+	int arr[10];
+	int i,d,head = 2, trueOrFalse = 1;
+	for ( i = 0; i < 10; i++)
+	{
+		printf("enter number %d for arr1:\n", i + 1);
+		scanf("%d", &arr[i]);
+	}
+	d = arr[1] - arr[0];
+	for (i = 2; i < 10; i++)
+	{
+		if (arr[i] - arr[i-1] != d)
+		{
+			trueOrFalse = 0;
+		}
+	}
+	if (trueOrFalse == 1)
+		printf("the array is a Invoice serie.");
+	else
+		printf("the array is not a Invoice serie.");
+}
+
+
+/********************************שאלה 4*******************************/
+typedef char string[256];
+int theEndOfString() {
+	int i = 0, length1 = 0, length2 = 0;
+	string str1, str2;
+	printf("enter string a:");
+	scanf("%s", str1);
+	printf("enter string b:");
+	scanf("%s", str2);
+	while (str1[i] != '\0')
+	{
+		length1++;
+		i++;
+	}
+	i = 0;
+	while (str2[i] != '\0')
+	{
+		length2++;
+		i++;
+	}
+	i = 0;
+	for (; i < length2; i++)
+	{
+		if (str1[length1 - length2 + i] != str2[i])
+		{
+			return 0;
+		}
+	}
+	return 1;
+}
+
+/********************************שאלה 5*******************************/
+void main(){
+	int arr[] = { 4,9,2,5 };
+	int size = sizeof(arr) / sizeof(arr[0]);
+	int i, j, temp,counter = 0;
+	for ( i = size - 1; i > 0 && counter != i ; i--)//אם הקאונטר שווה לאי הנוכחי זאת אומרת שכבר בסבב הקודם לא התבצעה החלפה אחת אפילו ולכן אין טעם לרוץ שוב על הלולאה
+	{
+		counter = 0;
+		for ( j = 0; j < i; j++)
+		{
+			if (arr[j] > arr[j + 1])
+			{
+				temp = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = temp;
+			}
+			else//אם לא הייתה החלפה
+			{
+				counter++;//הקאונטר בעצם ימנה לנו את מספר הפעמים שלא הייתה החלפה
+			}
+		}
+	}
+	for ( i = 0; i < size; i++)
+		printf("%d", arr[i]);
+	printf("\n");
+}
+
+

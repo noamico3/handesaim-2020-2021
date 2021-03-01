@@ -1,0 +1,7 @@
+List lst;
+int counter = 0;
+LNode* ptr = lst.head;
+while(ptr != NULL){
+	counter++;
+	ptr = ptr->next;
+}

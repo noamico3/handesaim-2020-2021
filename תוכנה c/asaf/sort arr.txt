@@ -1,0 +1,16 @@
+int sortLine(char line[], int col) {
+	int i, j;
+	char temp;
+	for ( i = col-1 ; i > 0; i--)
+	{
+		for ( j = 0; j < i; j++)
+		{
+			if (line[j] > line[j+1])
+			{
+				temp = line[j];
+				line[j] = line[j + 1];
+				line[j + 1] = temp;
+			}
+		}
+	}
+}

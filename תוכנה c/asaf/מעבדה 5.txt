@@ -1,0 +1,28 @@
+int isSame(int arr[], int size) {
+	int first = arr[0];
+	int i;
+	for ( i = 1; i < size; i++)
+	{
+		if (arr[i] != first)
+		{
+			return 0;
+		}
+	}
+	return 1;
+}
+
+
+void main() {
+	int arr[5];
+	int i;
+	for ( i = 0; i < 5; i++)
+	{
+		printf("enter number %d:", i + 1);
+		scanf("%d", &arr[i]);
+	}
+	if (isSame(arr,5) == 0)
+		printf("no");
+	else
+		printf("yes");
+}
+

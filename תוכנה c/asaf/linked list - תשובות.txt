@@ -1,0 +1,389 @@
+/*********************************1*********************************/
+typedef char string[256];
+
+typedef struct ListNode
+{
+	string data;
+	ListNode* next = NULL;
+}ListNode;
+
+typedef struct List
+{
+	ListNode* head;
+} List;
+
+
+
+void printList(List* lst) {
+	ListNode* tmp = lst->head;
+	while (tmp!= NULL)
+	{
+		puts(tmp->data);
+		tmp = tmp->next;
+	}
+}
+
+void main() {
+	List* lst = (List*)malloc(sizeof(List));
+	lst->head = (ListNode*)malloc(sizeof(ListNode));
+	ListNode ln4 = { "beautiful" ,NULL}, ln3 = { "is",&ln4 }, ln2 = { "world" ,&ln3 }, ln1 = { "hello",&ln2 };
+	lst->head = &ln1;
+	printList(lst);
+	free(lst);
+}
+---------------------------------------------------------------------------- אלו המבנים שנדרשים לתרגילים הבאים--------------------------------------------------------------------------
+typedef struct ListNode
+{
+	int data;
+	ListNode* next = NULL;
+	ListNode* prev = NULL;
+}ListNode;
+
+typedef struct List
+{
+	ListNode* head;
+	ListNode* tail;
+} List;
+
+/*********************************2*********************************/
+void freeFromStart(ListNode* lstN) {//מקבל את האיבר האחרון כלומר את איבר הזנב ומשם חוזר
+	if (lstN == NULL)
+		return;
+	freeFromStart(lstN->prev);//רק שיגיע לראש ישחרר
+	free(lstN);
+}
+
+void initList(List* lst)
+{
+	lst->head = lst->tail = NULL;
+}
+
+void printFromEnd(const List* l) {
+	ListNode* tmp = l->tail;
+	int flag = 1;
+	while (tmp != NULL)
+	{
+		if (flag)
+			printf("%d,", tmp->data);
+		tmp = tmp->prev;
+		flag = !flag;
+	}
+}
+
+
+void main() {
+	List lst;
+	initList(&lst);
+	lst.head = (ListNode*)malloc(sizeof(ListNode));
+	lst.head->data = 5;
+	lst.head->prev = NULL;
+	lst.tail = lst.head;
+	lst.head->next = (ListNode*)malloc(sizeof(ListNode));
+	lst.head->next->data = 6;
+	lst.head->next->prev = lst.tail;
+	lst.tail = lst.tail->next;
+	lst.head->next->next = (ListNode*)malloc(sizeof(ListNode));
+	lst.head->next->next->data = 7;
+	lst.head->next->next->prev = lst.tail;
+	lst.tail = lst.tail->next;
+	lst.head->next->next->next = (ListNode*)malloc(sizeof(ListNode));
+	lst.head->next->next->next->data = 8;
+	lst.head->next->next->next->prev = lst.tail;
+	lst.tail = lst.tail->next;
+	lst.head->next->next->next->next = (ListNode*)malloc(sizeof(ListNode));
+	lst.head->next->next->next->next->data = 9;
+	lst.head->next->next->next->next->prev = lst.tail;
+	lst.tail = lst.tail->next;
+	printFromEnd(&lst);
+	freeFromStart(lst.tail);
+}
+
+/*********************************3*********************************/
+
+int isEmpty(const List* lst)
+	return lst->head == NULL;
+
+
+ListNode* NewNode(ListNode* prev, int newData, ListNode* next)
+{
+	ListNode* newNode = (ListNode*)malloc(sizeof(ListNode));
+	newNode->data = newData;
+	newNode->next = next;
+	newNode->prev = prev;
+	return newNode;
+}
+
+-----------------------א---------------------------
+void insertToEmpty(List* lst, int data) {
+	lst->head = lst->tail = NewNode(NULL, data, NULL);
+}
+
+----------------------------ב----------------------------
+void insertAfterValue(List* lst, int insertAfter, int data)
+{
+	ListNode* tmp = lst->head;
+	while (tmp && tmp->data != insertAfter)
+		tmp = tmp->next;
+
+	if (tmp)
+	{
+		ListNode* newNode = (ListNode*)malloc(sizeof(ListNode));
+		newNode->data = data;
+		newNode->next = tmp->next;
+		tmp->next = newNode;
+	}
+}
+
+------------------------------ג------------------------------
+void insertValueToTail(List* lst, int data)
+{
+	if (isEmpty(lst))
+		insertToEmpty(lst, data);
+	else
+	{
+		ListNode* newNode = NewNode(NULL, data, NULL);
+		newNode->prev = lst->tail;
+		lst->tail->next = newNode;
+		lst->tail = newNode;
+	}
+}
+
+
+/*********************************4*********************************/
+void printListRec(ListNode* lstN) {//מקבל את האיבר הראשון כלומר את איבר הראש ומשם מתקדם
+	if (lstN == NULL)
+		return;
+	printf("%d", lstN->data);
+	printListRec(lstN->next);
+}
+
+/*********************************5*********************************/
+void printListRec(ListNode* lstN) {//מקבל את האיבר הראשון כלומר את איבר הראש ומשם מתקדם
+	if (lstN == NULL)
+		return;
+	printListRec(lstN->next);
+	printf("%d", lstN->data);//בחזרה מהרקורסיה הוא ידפיס
+}
+
+/*********************************6*********************************/
+void freeFromStart(ListNode* lstN) {//מקבל את האיבר האחרון כלומר את איבר הזנב ומשם חוזר
+	if (lstN == NULL)
+		return;
+	freeFromStart(lstN->prev);//רק שיגיע לראש ישחרר
+	free(lstN);
+}
+
+/*********************************7*********************************/
+void freeFromEnd(ListNode* lstN) {//מקבל את האיבר הראשון כלומר את איבר הראש ומשם מתקדם
+	if (lstN == NULL)
+		return;
+	freeFromEnd(lstN->next);
+	free(lstN);//רק בחזרה מהרקורסיה הוא ישחרר
+}
+
+/*********************************8*********************************/
+int ListLenRec(ListNode* lstN) {//מקבל את האיבר הראשון כלומר את איבר הראש ומשם מתקדם
+	if (lstN == NULL)
+		return 0;
+	return ListLenRec(lstN->next) + 1;
+}
+
+/*********************************10*********************************/
+int isEmpty(const List* lst)
+{
+	return lst->head == NULL;
+}
+
+int pop(List* lst) {
+	if (!isEmpty(lst))
+	{
+		int data = lst->tail->data;
+		if (lst->tail->prev == NULL) {
+			lst->tail = lst->head = NULL;
+			return data;
+		}
+		lst->tail->prev->next = NULL;
+		ListNode* tmp = lst->tail->prev;
+		free(lst->tail);
+		lst->tail = tmp;
+		return data;
+	}
+	printf("the stack is Empty!");
+	return -1;
+	
+}
+
+int top(List* lst) {
+	int data = lst->tail->data;
+	return data;
+}
+
+void push(List* lst, int data) {
+
+	if (isEmpty(lst))
+		lst->head = lst->tail = NewNode(NULL, data, NULL);
+	else {
+		ListNode* newnode = NewNode(NULL, data, NULL);
+		lst->tail->next = newnode;
+		newnode->prev = lst->tail;
+		lst->tail = newnode;
+	}
+}
+
+/*********************************11*********************************/
+void deleteNumber(List* lst, int number) {
+	ListNode* tmp = lst->head;
+	ListNode* tmp1;
+	while (tmp != NULL && (!isEmpty(lst)) )
+	{
+		if (tmp->data == number)
+		{
+			if (tmp->prev == NULL)
+			{
+				if (tmp->next == NULL)
+				{
+					free(lst->head);
+					lst->head = lst->tail = NULL;
+				}
+				else {
+					tmp->next->prev = NULL;
+					lst->head = tmp->next;
+					tmp->next = lst->head;
+					tmp1 = tmp->next;
+					free(tmp);
+					tmp = tmp1;
+				}
+			}
+			else {
+				tmp->prev->next = tmp->next;
+				if (tmp->next != NULL)
+					tmp->next->prev = tmp->prev;
+				else
+					lst->tail = tmp->prev;
+				tmp1 = tmp->next;
+				free(tmp);
+				tmp = tmp1;
+			}
+		}
+		else
+			tmp = tmp->next;
+	}
+}
+
+/*********************************12*********************************/
+void addAfterEvery(List* lst, int number1, int number2) {
+	ListNode* tmp = lst->head;
+	while (tmp != NULL)
+	{
+		if (tmp->data == number1)
+		{
+			ListNode* newNode = NewNode(tmp, number2, tmp->next);
+			tmp->next->prev = newNode;
+			tmp->next = newNode;
+		}
+		tmp = tmp->next;
+	}
+}
+
+/*********************************13*********************************/
+int isSorted(List* lst) {
+	ListNode* tmp = lst->head;
+	while (tmp->next != NULL)
+	{
+		if (tmp->data > tmp->next->data)
+			return 0;
+		tmp = tmp->next;
+	}
+	return 1;
+}
+
+/*********************************14*********************************/
+void insertToEmpty(List* lst, int data) {
+	lst->head = lst->tail = NewNode(NULL, data, NULL);
+}
+
+void insertValueToTail(List* lst, int data)
+{
+	if (isEmpty(lst))
+		insertToEmpty(lst, data);
+	else
+	{
+		ListNode* newNode = NewNode(NULL, data, NULL);
+		newNode->prev = lst->tail;
+		lst->tail->next = newNode;
+		lst->tail = newNode;
+	}
+}
+
+
+List* inBoth(List* lst1, List* lst2) {//כיוון שאמרת שאפשר לסמוך על זה שהרשימות ממוינות אני מניח שהן לא ריקות ולכן אני לא בודק אם הן ריקות
+	List* tmp = (List*)malloc(sizeof(List));
+	initList(tmp);
+	int already = 0;
+	ListNode* tmpN = lst2->head,*ofNumber = lst1->head;
+	while (ofNumber != NULL)
+	{
+		int number = ofNumber->data;
+		already = 0;
+		while (tmpN != NULL && tmpN->data <= number && already == 0)
+		{
+			if (tmpN->data == number)
+			{
+				insertValueToTail(tmp, number);
+				already = 1;//אם הוא כבר היה לא נרצה לבדוק את אותו מספר שוב 
+			}
+			tmpN = tmpN->next;//נתקדם לצומת הבאה ברשימה השנייה
+		}
+		ofNumber = ofNumber->next;//נתקדם לצומת של המספר הבא 
+	}
+	return tmp;//נחזיר את הרשימה של המשותפים
+}
+
+/*********************************15*********************************/
+List* listAboveAvg(List* lst) {
+	double avg = avgLst(lst);
+	List* tmp = (List*)malloc(sizeof(List));
+	initList(tmp);
+	ListNode* tmpN = lst->head;
+	while (tmpN != NULL)
+	{
+		if (tmpN->data > avg)
+		{
+			if (isEmpty(tmp))
+				tmp->head = tmp->tail = tmpN;
+			else {
+				tmp->tail->next = tmpN;
+				tmp->tail = tmpN;
+			}
+		}
+		tmpN = tmpN->next;
+	}
+	return tmp;
+}
+
+/*********************************16*********************************/
+1. LIST1,LIST2->next
+2.L
+3.LIST1->next, LIST2
+4.L
+5.LIST1->next, LIST2->next
+6.LIST2->num
+7.L
+8.LIST1->num
+9.L
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

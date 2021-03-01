@@ -1,0 +1,264 @@
+#include<stdio.h>
+void main() {
+	/*********שאלה 1*********/
+	printf("this is question number 1, please enter a char:\n");
+	int c = getchar();
+	printf("%c, %d, %x, %o", c, c, c, c);
+
+
+
+
+	/*********שאלה 2*********/
+	printf("\n-----------------------2------------------------\n");
+	int i = 0;
+	int counter = 0;
+	while (i <= 255)
+	{
+		if (counter == 5) {
+			counter = 0;
+			printf("\n");
+		}
+		printf("%c | %d | %2x,\t", i, i, i);
+		i++;
+		counter++;
+	}
+
+
+
+	/*********שאלה 3*********/
+	/*:המספרים שלייד האחוז מציגים "על כמה מקום יוצג אותו משתנה שהוכנס , בין לבין יש לנו טאב שמפריד, ההדפסה תהיה */
+	/*    A        65    %d    0.000000*/
+	/*יודפס מכיוון  מכיוון ש65 באסקי זה A */
+	/*"\t*/
+	/* 65יודפס כיוון שהכנסנו לו להדפיס את המספר 65*/
+	בנוסף הוא יודפס צמוד לצד ימין מבחינת המקום שהוקצה לו(6) כיוון שרשום מינוס
+	/*"\t"*/
+	/* מבטל את האחוז ולכן יודפס:  %%d */
+	/*"%d"*/
+	/*"\t"*/
+	/* יודפס כיוון שהוא מחפש ערך פלואט להכניס  והוא לא מוצא ולכן יודפס 0.000000*/
+	int main()
+	{
+		int x = 65;
+		int y = 3.0 / 2;//y = 1
+		printf("%5c\t%-6d\t%%d\t%f", x, x, y, y);
+		return 0;
+	}
+
+
+
+
+
+	/*********שאלה 4*********/
+	printf("\n----------------------------4---------------------------\n");
+	float salary, expense, flight, moneyInDay, days = 0, months = 0, sum = 0;
+	printf("how much do you earn in a month?:\n");
+	scanf("%f", &salary);
+	printf("how much do you pay for college in a month?:\n");
+	scanf("%f", &expense);
+	printf("how much does the flight cost?:\n");
+	scanf("%f", &flight);
+	moneyInDay = (salary - expense) / 30.0;
+	if (salary <= expense)
+	{
+		printf("you will not get enough money for the flight :(");
+	}
+	else {
+		while (sum < flight)
+		{
+			sum = sum + moneyInDay;
+			days++;
+		}
+		months = days / 30.0;
+		printf("you need to work %f months", months);
+	}
+
+
+
+	/*********שאלה 5*********/
+	printf("\n----------------------------5--------------------------\n");
+	typedef char String[256];//הגדרנו מה זה string
+	String str;
+	const int x = 9;//ישר הוספנו פה את ה +1
+	enum food { rice = 10, olive = 4 } f3, f1, f2;
+	f1 = rice;
+	f2 = rice;
+	f3 = 33;//לא שגיאה למרות שאינו מקבל ערך מתת התחום
+	printf("enter a string:\n");
+	scanf("%s", str);//& לא צריך
+	printf("%d,%d,%d,%d,%s", x, f1, f2, f3, str);
+
+
+
+
+	/*********שאלה 6*********/
+	printf("\n----------------------------6--------------------------\n");
+	float sum2 = 0;
+	int number;
+	printf("enter a number:\n");
+	scanf("%d", &number);
+	while (number != 0) {
+		sum2 = sum2 + number % 10;
+		number = number / 10;
+	}
+	printf("sum of digits = %f", sum2);
+
+
+
+
+	/*********שאלה 7*********/
+	printf("\n---------------------------7----------------------------\n");
+	int char1;
+	int counter3 = 0;
+	int sum1 = 0;
+	int counter2 = 0;
+	int a = 0;
+	int negetiveOrPositive = 1;
+	printf("enter a number:");
+	while ((char1 = getchar() ) != '\n')
+	{
+		if ((!(char1 == 43 || char1 == 45 || (char1 >= 48 && char1 <= 57))) && counter2 != 0){
+			a = 1;
+		}
+		if ((char1 == 43 || char1 == 45 || (char1 >= 48 && char1 <= 57)) && a == 0)
+		{
+			if (char1 == 45)
+			{
+				negetiveOrPositive = 0;
+			}
+			if (char1 >= 48 && char1 <= 57)
+			{
+				if (counter3 == 1)
+				{
+					sum1 = sum1 * 10;
+					counter3 = 0;
+				}
+				sum1 = sum1 + (char1 - 48);
+				counter3++;
+				counter2++;
+			}
+		}
+
+	}
+	if (negetiveOrPositive == 0)
+	{
+		sum1 = sum1 * (-1);
+	}
+	printf("%d", sum1);
+
+
+
+	/*********שאלה 8*********/
+	printf("\n----------------------------8---------------------------\n");
+	int number3;
+	printf("enter a number:\n");
+	scanf("%d", &number3);
+	int number2 = 0;
+	int count = 0;
+	while (number3 != 0) {
+		if (count == 1)
+		{
+			number2 = number2 * 10;
+			count = 0;
+		}
+		number2 = number2 + (number3 % 10);
+		count++;
+		number3 = number3 / 10;
+	}
+	while (number2 != 0)
+	{
+		putchar(number2 % 10 + 48);
+		number2 = number2 / 10;
+	}
+
+
+
+
+	/*********שאלה 9*********/
+	printf("\n----------------------------9---------------------------\n");
+	float A, B, X;
+	printf("enter A number:\n");
+	scanf("%f", &A);
+	printf("enter B number:\n");
+	scanf("%f", &B);
+	if (A == 0 && B == 0)
+	{
+		printf("there is endless answers");
+	}
+	if (A == 0 && B != 0)
+	{
+		printf("there is no solution for this equation");
+	}
+	if (A != 0 && B != 0)
+	{
+		X = (-1 * B) / A;
+		printf("x = %f", X);
+	}
+	
+
+
+
+
+	/*********שאלה 10*********/
+	printf("\n----------------------------10---------------------------\n");
+	int character;
+	int counter4 = 0, counter5 = 0;
+	int b = 0, negetiveOrPositive1 = 1;
+	float sum2 = 0;
+	int afterPoint = 0,point = 0;
+	printf("enter a number:");
+	while ((character = getchar()) != '\n')
+	{
+		if ((!(character == 43 || character == 45 || character == 46|| (character >= 48 && character <= 57))) && counter4 != 0) {
+			b = 1;
+
+		}
+
+		if ( (character == 43 || character == 45 || character == 46|| (character >= 48 && character <= 57)) && b == 0)
+		{
+			if (character == 45)
+			{
+				negetiveOrPositive1 = 0;
+			}
+			if (character == 46)
+			{
+				point = 1;
+			}
+
+
+			if (character >= 48 && character <= 57)
+			{
+				if (counter5 == 1)
+				{
+					sum2 = sum2 * 10;
+					counter5 = 0;
+				}
+				if (point == 1)
+				{
+					afterPoint++;
+				}
+				sum2 = sum2 + (character - 48);
+				counter5++;
+				counter4++;
+			}
+		}
+
+	}
+	if (negetiveOrPositive1 == 0)
+	{
+		sum2 = sum2 * (-1);
+	}
+	while (afterPoint > 0)
+	{
+		sum2 = sum2 / 10.0;
+		afterPoint--;
+	}
+	if (b == 1)
+	{
+		printf("ERROR - the input is illigal");
+	}
+	else
+		printf("%g", sum2);
+
+
+}

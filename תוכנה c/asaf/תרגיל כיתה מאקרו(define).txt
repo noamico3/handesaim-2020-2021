@@ -1,0 +1,16 @@
+#define capacity(line)  line*line*line
+#define isEqual(a)  a%10 ==  a/10? 1:0
+#define MAX(a,b) a>b?a:b
+
+void main(){
+	int line,num1,num2,num3;
+	scanf("%d",&line);
+	printf("%d",capacity(line));
+	scanf("%d",&num1);
+	scanf("%d",&num2);
+	scanf("%d",&num3);
+	printf("%d",MAX(num1,MAX(num2,num3));
+	
+שאלה 4
+-----------------------
+יודפס 3 פעמים
